@@ -66,19 +66,22 @@
         }
 
         function checkAnswer(selected) {
-            const questionData = questions[level][currentQuestion];
-            if (selected === questionData.correct) {
-                score++;
-                alert("正確！");
-            } else {
-                alert(`錯誤！正確答案是：${questionData.options[questionData.correct]}\n解析：${questionData.explanation}`);
-            }
+    const questionData = questions[level][currentQuestion];
+    if (selected === questionData.correct) {
+        score++;
+        alert("正確！");
+    } else {
+        alert(`錯誤！正確答案是：${questionData.options[questionData.correct]}\n解析：${questionData.explanation}`);
+        
+        // 僅在答錯時顯示「此解析是否對您有幫助」的確認視窗
+        const isHelpful = confirm("此解析對您是否有幫助？（按確定表示有，取消表示無）");
+        feedback.push({ question: questionData.question, helpful: isHelpful });
+    }
 
-            const isHelpful = confirm("此解析對您是否有幫助？（按確定表示有，取消表示無）");
-            feedback.push({ question: questionData.question, helpful: isHelpful });
+    currentQuestion++;
+    loadQuestion();
+}
 
-            currentQuestion++;
-            loadQuestion();
         }
 
         function submitFeedback() {
