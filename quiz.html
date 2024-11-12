@@ -11,7 +11,7 @@
         const firebaseConfig = {
             apiKey: "YOUR_API_KEY",
             authDomain: "YOUR_AUTH_DOMAIN",
-            databaseURL: "https://jrjz-8626f-default-rtdb.firebaseio.com",
+            databaseURL: "https://pccujrjz-f0c56-default-rtdb.firebaseio.com",
             projectId: "YOUR_PROJECT_ID",
             storageBucket: "YOUR_STORAGE_BUCKET",
             messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
@@ -72,9 +72,11 @@
                 alert("正確！");
             } else {
                 alert(`錯誤！正確答案是：${questionData.options[questionData.correct]}\n解析：${questionData.explanation}`);
-                const isHelpful = confirm("此解析對您是否有幫助？（按確定表示有，取消表示無）");
-                feedback.push({ question: questionData.question, helpful: isHelpful });
             }
+
+            const isHelpful = confirm("此解析對您是否有幫助？（按確定表示有，取消表示無）");
+            feedback.push({ question: questionData.question, helpful: isHelpful });
+
             currentQuestion++;
             loadQuestion();
         }
