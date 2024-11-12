@@ -4,6 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>投資理財測驗 - 難度選擇</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script>
+        // Firebase 初始化
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            databaseURL: "https://jrjz-8626f-default-rtdb.firebaseio.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+    </script>
 </head>
 <body>
     <h1>投資理財測驗</h1>
@@ -24,15 +40,14 @@
             window.location.href = `quiz.html?level=${level}`;
         }
 
-        function updateFeedbackStats() {
-            const stats = JSON.parse(localStorage.getItem('quizStats')) || { participants: 0, totalScore: 0, helpfulCount: 0, totalQuestions: 0 };
-
+        // 監聽 Firebase 資料變化
+        const statsRef = db.ref('quizStats');
+        statsRef.on('value', (snapshot) => {
+            const stats = snapshot.val() || { participants: 0, totalScore: 0, helpfulCount: 0, totalQuestions: 0 };
             document.getElementById('total-participants').textContent = stats.participants;
             document.getElementById('average-score').textContent = stats.participants ? Math.round((stats.totalScore / (stats.participants * 10)) * 100) + '%' : '0%';
             document.getElementById('helpful-rate').textContent = stats.totalQuestions ? Math.round((stats.helpfulCount / stats.totalQuestions) * 100) + '%' : '0%';
-        }
-
-        updateFeedbackStats();
+        });
     </script>
 </body>
 </html>
