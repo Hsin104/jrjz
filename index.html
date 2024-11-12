@@ -21,13 +21,12 @@
         const db = firebase.database();
     </script>
 </head>
-
 <body>
     <h1>投資理財測驗</h1>
     <p>請選擇測驗難度：</p>
-    <button onclick="startQuiz(1)">難度 1</button>
-    <button onclick="startQuiz(2)">難度 2</button>
-    <button onclick="startQuiz(3)">難度 3</button>
+    <button onclick="startQuiz(1)">小白級 (難度 1)</button>
+    <button onclick="startQuiz(2)">菜鳥級 (難度 2)</button>
+    <button onclick="startQuiz(3)">老手級 (難度 3)</button>
 
     <h2>測驗回饋統計</h2>
     <div id="feedback-stats">
@@ -43,10 +42,12 @@
         // 監聽 Firebase 資料變化
         const statsRef = db.ref('quizStats');
         statsRef.on('value', (snapshot) => {
-            const stats = snapshot.val() || { participants: 0, totalScore: 0, helpfulCount: 0, totalQuestions: 0 };
+            const stats = snapshot.val() || { participants: 0, totalScore: 0, helpfulCount: 0, totalErrors: 0 };
             document.getElementById('total-participants').textContent = stats.participants;
-            document.getElementById('average-score').textContent = stats.participants ? Math.round((stats.totalScore / (stats.participants * 10)) * 100) + '%' : '0%';
-            document.getElementById('helpful-rate').textContent = stats.totalQuestions ? Math.round((stats.helpfulCount / stats.totalQuestions) * 100) + '%' : '0%';
+
+            // 以錯誤題數為基礎計算「有幫助」比例
+            const helpfulRate = stats.totalErrors > 0 ? Math.round((stats.helpfulCount / stats.totalErrors) * 100) : 0;
+            document.getElementById('helpful-rate').textContent = `${helpfulRate}%`;
         });
     </script>
 </body>
