@@ -30,18 +30,31 @@
         const urlParams = new URLSearchParams(window.location.search);
         const level = urlParams.get('level');
 
+        // 題庫資料：按難度等級分組
         const questions = {
-            1: [
-                { question: "什麼是股票？", options: ["資產", "負債", "收入"], correct: 0, explanation: "股票是一種資產代表公司所有權。" },
-                //... 更多題目
+            1: [ // 小白級
+                { question: "投資的主要目的是什麼？", options: ["增加資產", "增加負債", "增加消費", "增加工作時間"], correct: 0, explanation: "投資的主要目的是增加資產。" },
+                { question: "什麼是股票？", options: ["公司發行的所有權憑證", "一種債務工具", "一種現金等價物", "一種商品"], correct: 0, explanation: "股票是一種公司所有權的憑證。" },
+                { question: "定期存款的特點是什麼？", options: ["固定利率和固定存期", "隨時可以提取", "無需支付利息", "只針對大額存款"], correct: 0, explanation: "定期存款通常具有固定利率和固定存期。" },
+                { question: "在選擇投資時，應考慮什麼？", options: ["自己的風險承受能力", "朋友的意見", "隨意選擇", "只看短期回報"], correct: 0, explanation: "選擇投資時應考慮風險承受能力。" },
+                { question: "什麼是債券？", options: ["一種借貸契約", "一種股權證明", "一種商品", "一種貨幣"], correct: 0, explanation: "債券是一種借貸契約。" },
+                // ... 更多小白級題目
             ],
-            2: [
-                { question: "複利的主要特點是？", options: ["利息上再利息", "一次性利息", "零利息"], correct: 0, explanation: "複利指利息也會產生利息的方式。" },
-                //... 更多題目
+            2: [ // 菜鳥級
+                { question: "什麼是資產配置？", options: ["根據風險和收益分配資產", "僅投資於股票", "只考慮儲蓄", "不需要考慮"], correct: 0, explanation: "資產配置是根據風險和收益進行分配。" },
+                { question: "在投資中，什麼是風險承受能力？", options: ["投資者能接受的損失程度", "只關心收益", "僅限於短期投資", "無需關心"], correct: 0, explanation: "風險承受能力是投資者能接受的損失程度。" },
+                { question: "定投的主要好處是什麼？", options: ["平攤風險和成本", "只關心短期收益", "僅限於特定資產", "無需考慮"], correct: 0, explanation: "定投有助於平攤風險和成本。" },
+                { question: "什麼是投資組合？", options: ["不同類型的投資資產組合", "只包含股票的投資", "僅限於債券", "無需考慮"], correct: 0, explanation: "投資組合包含不同類型的資產。" },
+                { question: "什麼是市場波動？", options: ["市場價格的上下波動", "僅指股票", "不影響投資", "只有短期影響"], correct: 0, explanation: "市場波動是市場價格的上下變化。" },
+                // ... 更多菜鳥級題目
             ],
-            3: [
-                { question: "利率風險的來源是？", options: ["利率變動", "通貨膨脹", "市場風險"], correct: 0, explanation: "利率風險主要來自利率的變動影響。" },
-                //... 更多題目
+            3: [ // 老手級
+                { question: "什麼是資本利得稅？", options: ["資產增值所需支付的稅", "只限於固定資產", "無需支付", "僅針對個人"], correct: 0, explanation: "資本利得稅是針對資產增值所需支付的稅。" },
+                { question: "如何評估股票的內在價值？", options: ["通過基本面分析", "僅依賴市場趨勢", "只考慮技術指標", "無需關心"], correct: 0, explanation: "股票內在價值可以通過基本面分析進行評估。" },
+                { question: "如何設計有效的資產配置策略？", options: ["根據風險承受能力和投資目標", "隨意選擇資產", "僅考慮收益", "無需調查"], correct: 0, explanation: "資產配置策略應根據風險和目標進行設計。" },
+                { question: "在考慮房地產投資時，最重要的因素是什麼？", options: ["地理位置和市場趨勢", "僅限於價格", "只考慮租金", "無需考慮"], correct: 0, explanation: "房地產投資中地理位置和市場趨勢是重要因素。" },
+                { question: "什麼是對沖策略？", options: ["減少投資風險的手段", "僅限於股票", "只考慮高風險投資", "無需使用策略"], correct: 0, explanation: "對沖策略用於減少投資風險。" },
+                // ... 更多老手級題目
             ]
         };
 
@@ -66,39 +79,42 @@
         }
 
         function checkAnswer(selected) {
-    const questionData = questions[level][currentQuestion];
-    if (selected === questionData.correct) {
-        score++;
-        alert("正確！");
-    } else {
-        alert(`錯誤！正確答案是：${questionData.options[questionData.correct]}\n解析：${questionData.explanation}`);
-        
-        // 僅在答錯時顯示「此解析是否對您有幫助」的確認視窗
-        const isHelpful = confirm("此解析對您是否有幫助？（按確定表示有，取消表示無）");
-        feedback.push({ question: questionData.question, helpful: isHelpful });
-    }
+            const questionData = questions[level][currentQuestion];
+            if (selected === questionData.correct) {
+                score++;
+                alert("正確！");
+            } else {
+                alert(`錯誤！正確答案是：${questionData.options[questionData.correct]}\n解析：${questionData.explanation}`);
+                
+                // 僅在答錯時顯示「此解析是否對您有幫助」的確認視窗
+                const isHelpful = confirm("此解析對您是否有幫助？（按確定表示有，取消表示無）");
+                feedback.push({ question: questionData.question, helpful: isHelpful });
+            }
 
-    currentQuestion++;
-    loadQuestion();
-}
-
+            currentQuestion++;
+            loadQuestion();
         }
 
         function submitFeedback() {
-            const statsRef = db.ref('quizStats');
-            statsRef.once('value').then((snapshot) => {
-                const stats = snapshot.val() || { participants: 0, totalScore: 0, helpfulCount: 0, totalQuestions: 0 };
+    const statsRef = db.ref('quizStats');
+    statsRef.once('value').then((snapshot) => {
+        const stats = snapshot.val() || { participants: 0, totalScore: 0, helpfulCount: 0, totalErrors: 0 };
 
-                stats.participants += 1;
-                stats.totalScore += score;
-                stats.totalQuestions += questions[level].length;
-                stats.helpfulCount += feedback.filter(f => f.helpful).length;
+        // 計算錯誤題數中被標記為「有幫助」的題數
+        const helpfulErrors = feedback.filter(f => !f.correct && f.helpful).length;
+        const totalErrors = feedback.filter(f => !f.correct).length;
 
-                statsRef.set(stats);
-                alert("感謝您的參與！測驗結果已提交。");
-                window.location.href = "index.html";
-            });
-        }
+        stats.participants += 1;
+        stats.totalScore += score;
+        stats.totalErrors += totalErrors;
+        stats.helpfulCount += helpfulErrors;
+
+        statsRef.set(stats);
+        alert("感謝您的參與！測驗結果已提交。");
+        window.location.href = "index.html";
+    });
+}
+
 
         loadQuestion();
     </script>
