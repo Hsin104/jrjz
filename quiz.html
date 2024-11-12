@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>投資理財測驗</title>
+</head>
+<body>
+    <h1>投資理財測驗</h1>
+    <div id="question-container"></div>
+    <button onclick="submitFeedback()">提交回饋</button>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const level = urlParams.get('level');
+
+        // 三個難度的題目，每個難度10題，共30題
+        const questions = {
+            1: [
+                { question: "什麼是股票？", options: ["資產", "負債", "收入"], correct: 0, explanation: "股票是一種資產代表公司所有權。" },
+                { question: "什麼是債券？", options: ["借款", "股票", "保險"], correct: 0, explanation: "債券是一種借款契約。" },
+                { question: "何謂利率？", options: ["利息的百分比", "稅收", "公司收益"], correct: 0, explanation: "利率是借款人需支付的利息比率。" },
+                { question: "儲蓄的主要目的是什麼？", options: ["消費", "投資", "備用金"], correct: 2, explanation: "儲蓄主要是為了未來支出或應急準備。" },
+                { question: "定存的風險較？", options: ["低", "高", "無風險"], correct: 0, explanation: "定存的風險通常低於股票等其他投資工具。" },
+                { question: "投資的基本原則是？", options: ["不承擔風險", "高收益必定無風險", "風險與報酬成正比"], correct: 2, explanation: "一般來說，風險越高，報酬可能越高。" },
+                { question: "通貨膨脹會？", options: ["增加貨幣購買力", "降低貨幣購買力", "保持貨幣購買力不變"], correct: 1, explanation: "通貨膨脹會降低貨幣的實際購買力。" },
+                { question: "退休金主要是為了？", options: ["應急", "子女教育", "退休後生活"], correct: 2, explanation: "退休金是為了保障退休後的生活品質。" },
+                { question: "定存屬於？", options: ["低風險投資", "高風險投資", "無風險投資"], correct: 0, explanation: "定存風險較低，適合保守型投資人。" },
+                { question: "銀行存款的主要優勢是？", options: ["高收益", "流動性高", "無法提前取出"], correct: 1, explanation: "銀行存款具有流動性高的特點，隨時可取用。" }
+            ],
+            2: [
+                { question: "複利的主要特點是？", options: ["利息上再利息", "一次性利息", "零利息"], correct: 0, explanation: "複利指利息也會產生利息的方式。" },
+                { question: "ETF代表什麼？", options: ["交易型開放式指數基金", "非上市股票", "定存"], correct: 0, explanation: "ETF是一種可以交易的指數型基金。" },
+                { question: "何為分散投資？", options: ["投資於單一資產", "多樣化投資", "只買保險"], correct: 1, explanation: "分散投資是將資金分散在不同資產以降低風險。" },
+                { question: "股票市場的主要風險來源是？", options: ["市場波動", "銀行破產", "無風險"], correct: 0, explanation: "股票市場風險主要來自於市場價格波動。" },
+                { question: "債券的主要收益來源是？", options: ["利息", "分紅", "房地產租金"], correct: 0, explanation: "債券持有人的主要收益來自於利息收入。" },
+                { question: "互惠基金是？", options: ["一種集體投資工具", "銀行儲蓄產品", "股票"], correct: 0, explanation: "互惠基金集結投資人資金進行專業管理。" },
+                { question: "投資黃金的主要原因是？", options: ["增值快速", "避險資產", "無風險"], correct: 1, explanation: "黃金被視為避險資產，可抗通脹。" },
+                { question: "投資組合中的股票比例通常視？", options: ["風險承受能力", "收入", "年齡"], correct: 0, explanation: "股票比例依照投資者的風險承受能力進行調整。" },
+                { question: "何謂現金流量？", options: ["收入與支出的流動", "資產總和", "利息總和"], correct: 0, explanation: "現金流量是收入與支出之間的差額。" },
+                { question: "投資中的槓桿效果指？", options: ["利用借款增加投資報酬", "無風險增值", "低利貸款"], correct: 0, explanation: "槓桿是指利用借款放大投資報酬，但也伴隨風險。" }
+            ],
+            3: [
+                { question: "利率風險的來源是？", options: ["利率變動", "通貨膨脹", "市場風險"], correct: 0, explanation: "利率風險主要來自利率的變動影響。" },
+                { question: "期貨的概念是？", options: ["未來價格合約", "股票", "債券"], correct: 0, explanation: "期貨是以預定價格買賣商品或金融工具的合約。" },
+                { question: "行業輪動投資策略是？", options: ["投資於表現最好行業", "定期重新平衡投資組合", "以金利為主"], correct: 1, explanation: "行業輪動策略是基於市場環境調整行業權重。" },
+                { question: "期權投資的風險來自於？", options: ["資產價格變動", "收益的保證", "無風險"], correct: 0, explanation: "期權風險來自於資產價格的波動。" },
+                { question: "股利再投資計劃的優點是？", options: ["增長資本", "現金收益", "儲蓄"], correct: 0, explanation: "股利再投資計劃能自動增長資本。" },
+                { question: "槓桿交易的主要風險是？", options: ["放大損失", "低風險增長", "利息收入"], correct: 0, explanation: "槓桿交易能放大投資報酬，但也會放大損失。" },
+                { question: "風險平價投資策略是？", options: ["將資產按風險分配", "分散單一資產", "集中高風險資產"], correct: 0, explanation: "風險平價策略將資金分配到風險相同的資產。" },
+                { question: "時間價值的概念是？", options: ["資金隨時間增值", "貨幣隨時間貶值", "金利收益"], correct: 1, explanation: "時間價值指的是貨幣隨時間貶值的現象。" },
+                { question: "融資的風險主要來自？", options: ["利率波動", "資產配置", "短期波動"], correct: 0, explanation: "融資主要風險來自於借款利率的波動。" },
+                { question: "貨幣市場的風險主要是？", options: ["利率變動", "市場劇烈波動", "長期持有"], correct: 0, explanation: "貨幣市場風險主要來自利率波動。" }
+            ]
+        };
+
+        let currentQuestion = 0;
+        let score = 0;
+        let feedback = [];
+
+        function loadQuestion() {
+            const questionData = questions[level][currentQuestion];
+            if (!questionData) {
+                document.getElementById('question-container').innerHTML = `測驗完成！正確率：${Math.round((score / questions[level].length) * 100)}%`;
+                return;
+            }
+
+            const container = document.getElementById('question-container');
+            container.innerHTML = `
+                <p>${questionData.question}</p>
+                ${questionData.options.map((option, index) => `
+                    <button onclick="checkAnswer(${index})">${option}</button>
+                `).join('')}
+            `;
+        }
+
+        function checkAnswer(selected) {
+            const questionData = questions[level][currentQuestion];
+            if (selected === questionData.correct) {
+                score++;
+                alert("正確！");
+            } else {
+                alert(`錯誤！正確答案是：${questionData.options[questionData.correct]}\n解析：${questionData.explanation}`);
+            }
+
+            const isHelpful = confirm("此解析對您是否有幫助？（按確定表示有，取消表示無）");
+            feedback.push({ question: questionData.question, helpful: isHelpful });
+
+            currentQuestion++;
+            loadQuestion();
+        }
+
+        function submitFeedback() {
+            const stats = JSON.parse(localStorage.getItem('quizStats')) || { participants: 0, totalScore: 0, helpfulCount: 0, totalQuestions: 0 };
+
+            stats.participants += 1;
+            stats.totalScore += score;
+            stats.totalQuestions += questions[level].length;
+            stats.helpfulCount += feedback.filter(f => f.helpful).length;
+
+            localStorage.setItem('quizStats', JSON.stringify(stats));
+            alert("感謝您的參與！測驗結果已提交。");
+            window.location.href = "index.html";
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>

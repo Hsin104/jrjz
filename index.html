@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>投資理財測驗 - 難度選擇</title>
+</head>
+<body>
+    <h1>投資理財測驗</h1>
+    <p>請選擇測驗難度：</p>
+    <button onclick="startQuiz(1)">難度 1</button>
+    <button onclick="startQuiz(2)">難度 2</button>
+    <button onclick="startQuiz(3)">難度 3</button>
+
+    <h2>測驗回饋統計</h2>
+    <div id="feedback-stats">
+        <p>參與人數：<span id="total-participants">0</span></p>
+        <p>平均正確率：<span id="average-score">0%</span></p>
+        <p>覺得詳解有幫助的比例：<span id="helpful-rate">0%</span></p>
+    </div>
+
+    <script>
+        function startQuiz(level) {
+            window.location.href = `quiz.html?level=${level}`;
+        }
+
+        function updateFeedbackStats() {
+            const stats = JSON.parse(localStorage.getItem('quizStats')) || { participants: 0, totalScore: 0, helpfulCount: 0, totalQuestions: 0 };
+
+            document.getElementById('total-participants').textContent = stats.participants;
+            document.getElementById('average-score').textContent = stats.participants ? Math.round((stats.totalScore / (stats.participants * 10)) * 100) + '%' : '0%';
+            document.getElementById('helpful-rate').textContent = stats.totalQuestions ? Math.round((stats.helpfulCount / stats.totalQuestions) * 100) + '%' : '0%';
+        }
+
+        updateFeedbackStats();
+    </script>
+</body>
+</html>
