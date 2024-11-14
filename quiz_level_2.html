@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>投資理財測驗</title>
+    <title>投資理財測驗 - 進階級 (Level 2)</title>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <script>
@@ -22,257 +22,167 @@
     </script>
 </head>
 <body>
-    <h1>投資理財測驗</h1>
+    <h1>投資理財測驗 - 進階級 (Level 2)</h1>
     <div id="question-container"></div>
-    <button onclick="submitFeedback()">提交回饋</button>
 
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const level = urlParams.get('level');
-
-        // 題庫資料：按難度等級分組
-        const questions = {
-            2: [ // 菜鳥級
-                {
-                    "question": "1. 什麼是資產配置？",
-                    "options": ["A. 僅投資於股票", "B. 根據風險和收益分配資產", "C. 只關心儲蓄", "D. 只選擇高回報資產"],
-                    "correct": 1,
-                    "explanation": "資產配置是根據投資者的風險承受能力和期望收益，分配不同種類的資產來達到最佳的投資效果。"
-                },
-                {
-                    "question": "2. 在投資中，什麼是風險承受能力？",
-                    "options": ["A. 投資者能接受的損失程度", "B. 僅關注長期收益", "C. 只考慮市場趨勢", "D. 無需關心風險"],
-                    "correct": 0,
-                    "explanation": "風險承受能力是指投資者在投資過程中能夠接受的最大損失範圍。"
-                },
-                {
-                    "question": "3. 定投的主要好處是什麼？",
-                    "options": ["A. 只關心短期收益", "B. 限於股票市場", "C. 平攤風險和成本", "D. 適合每一位投資者"],
-                    "correct": 2,
-                    "explanation": "定期定額投資有助於平攤風險和成本，降低市場波動的影響。"
-                },
-                {
-                    "question": "4. 什麼是投資組合？",
-                    "options": ["A. 不同類型的投資資產組合", "B. 僅限於某一種資產", "C. 只包含債券", "D. 每一項投資都風險相同"],
-                    "correct": 0,
-                    "explanation": "投資組合是指將資金分散投資於不同類型的資產，以分散風險並提高回報潛力。"
-                },
-                {
-                    "question": "5. 什麼是市場波動？",
-                    "options": ["A. 市場價格的上下波動", "B. 僅指股票的變動", "C. 影響投資回報", "D. 僅限於短期波動"],
-                    "correct": 0,
-                    "explanation": "市場波動是指市場價格在一定時間內的變動，這會影響投資者的回報。"
-                },
-                {
-                    "question": "6. 購買房產的主要成本包括什麼？",
-                    "options": ["A. 只關注購房價格", "B. 僅限於稅費", "C. 首付、貸款利息和維護費用", "D. 只考慮房屋增值"],
-                    "correct": 2,
-                    "explanation": "購房的成本除了購房價格外，還包括首付、貸款利息和房屋的日常維護費用。"
-                },
-                {
-                    "question": "7. 什麼是短期投資？",
-                    "options": ["A. 通常持有一年或以下的投資", "B. 僅限於長期投資", "C. 只限於股票", "D. 持有期不確定"],
-                    "correct": 0,
-                    "explanation": "短期投資是指預計持有期限為一年或更短的投資。"
-                },
-                {
-                    "question": "8. 為什麼要制定財務目標？",
-                    "options": ["A. 只考慮短期需求", "B. 只關心支出情況", "C. 幫助管理財務和投資", "D. 不需要目標"],
-                    "correct": 2,
-                    "explanation": "財務目標有助於為財務決策提供指導，讓投資者能夠合理規劃未來的財務狀況。"
-                },
-                {
-                    "question": "9. 什麼是信用評分？",
-                    "options": ["A. 評估個人信用風險的指標", "B. 只有銀行能夠使用", "C. 僅限於大額貸款", "D. 無需了解"],
-                    "correct": 0,
-                    "explanation": "信用評分是用來評估個人或企業的信用風險，通常由信用機構根據信用歷史計算得出。"
-                },
-                {
-                    "question": "10. 如何提高信用評分？",
-                    "options": ["A. 頻繁申請信用卡", "B. 僅關心購物優惠", "C. 按時還款和保持低負債", "D. 僅依賴父母的信用"],
-                    "correct": 2,
-                    "explanation": "按時還款並保持低負債比率是提高信用評分的有效方法。"
-                },
-                {
-                    "question": "11. 如果投資損失，應該怎麼做？",
-                    "options": ["A. 立即停止所有投資", "B. 隨便選擇新的投資", "C. 分析原因並調整策略", "D. 忽視市場變動"],
-                    "correct": 2,
-                    "explanation": "應該分析損失原因並調整投資策略，而不是盲目停止或重新選擇投資。"
-                },
-                {
-                    "question": "12. 購買保險的主要目的是什么？",
-                    "options": ["A. 只考慮成本", "B. 幫助分散風險並提供保障", "C. 僅針對高收入者", "D. 避免所有投資"],
-                    "correct": 1,
-                    "explanation": "保險的主要目的是幫助個人或家庭分散風險，提供保障，避免突發情況帶來的財務困境。"
-                },
-                {
-                    "question": "13. 什麼是應急基金？",
-                    "options": ["A. 為突發情況準備的資金", "B. 只限於短期投資", "C. 無需儲蓄", "D. 只適用於退休人士"],
-                    "correct": 0,
-                    "explanation": "應急基金是為了應對突發情況而專門準備的資金，應該隨時可用。"
-                },
-                {
-                    "question": "14. 什麼是加密貨幣？",
-                    "options": ["A. 一種數字貨幣，利用加密技術", "B. 只是一種股票", "C. 只在某些國家合法", "D. 無需了解"],
-                    "correct": 0,
-                    "explanation": "加密貨幣是一種基於區塊鏈技術的數字貨幣，具有去中心化特點。"
-                },
-                {
-                    "question": "15. 定期儲蓄的主要優勢是什麼？",
-                    "options": ["A. 隨時可以取出", "B. 積累資金並獲得利息", "C. 僅限於高額儲蓄", "D. 只關心消費"],
-                    "correct": 1,
-                    "explanation": "定期儲蓄通常可以幫助人們積累資金並獲得穩定的利息收益。"
-                },
-                {
-                    "question": "16. 購買股票時，最重要的因素是什麼？",
-                    "options": ["A. 公司的基本面分析", "B. 只依賴市場情緒", "C. 只考慮短期價格", "D. 以賺錢為唯一標準"],
-                    "correct": 0,
-                    "explanation": "購買股票時，了解公司的基本面分析是評估股票價值的關鍵因素。"
-                },
-                {
-                    "question": "17. 在購買投資產品時，應該考慮什麼？",
-                    "options": ["A. 只看回報", "B. 費用、回報和風險", "C. 只依賴朋友的建議", "D. 無需調查"],
-                    "correct": 1,
-                    "explanation": "選擇投資產品時，應該綜合考慮費用、回報和風險等因素。"
-                },
-                {
-                    "question": "18. 什麼是被動收入？",
-                    "options": ["A. 需要持續工作才能賺錢的收入", "B. 資本投資和資產運營帶來的收入", "C. 只來自工作收入", "D. 只能從儲蓄中獲得"],
-                    "correct": 1,
-                    "explanation": "被動收入是指通過投資、資產增值等方式獲得的收入，無需持續工作。"
-                },
-                {
-                    "question": "19. 投資債券的主要風險是什麼？",
-                    "options": ["A. 利率風險", "B. 資本風險", "C. 市場波動", "D. 費用過高"],
-                    "correct": 0,
-                    "explanation": "投資債券的主要風險是利率風險，當市場利率上升時，債券價格可能會下跌。"
-                },
-                {
-                    "question": "20. 投資前，應該了解哪些資訊？",
-                    "options": ["A. 市場趨勢", "B. 公司的基本面", "C. 預期回報", "D. 以上皆是"],
-                    "correct": 3,
-                    "explanation": "投資前，應該全面了解市場趨勢、公司基本面和預期回報等資訊。"
-                },
-                {
-                    "question": "21. 投資的主要目的是什麼？",
-                    "options": ["A. 只為了短期利益", "B. 增加財富並保護資本", "C. 只關心股市", "D. 無需任何目的"],
-                    "correct": 1,
-                    "explanation": "投資的主要目的是通過增值資本，達成長期的財富增長並保護資本。"
-                },
-                {
-                    "question": "22. 什麼是通脹風險？",
-                    "options": ["A. 投資回報小於通脹率", "B. 僅限於高利率", "C. 市場價格無變動", "D. 投資過度"],
-                    "correct": 0,
-                    "explanation": "通脹風險是指投資回報低於通脹率，導致實際購買力下降的風險。"
-                },
-                {
-                    "question": "23. 在金融市場中，什麼是多元化投資？",
-                    "options": ["A. 只投資於一種類型的資產", "B. 將資金分配到不同類型的資產以減少風險", "C. 投資於特定地區的資產", "D. 只關注短期回報"],
-                    "correct": 1,
-                    "explanation": "多元化投資是指將資金分散於不同類型的資產中，這樣可以減少單一市場或資產的風險。"
-                },
-                {
-                    "question": "24. 什麼是指數基金？",
-                    "options": ["A. 只包含股票的基金", "B. 投資於特定國家的基金", "C. 追蹤某一指數表現的基金", "D. 只投資於高回報公司"],
-                    "correct": 2,
-                    "explanation": "指數基金是以某一指數的表現為目標，通常會投資於該指數中所有的股票或資產，達到市場整體回報的效果。"
-                },
-                {
-                    "question": "25. 什麼是資本利得稅？",
-                    "options": ["A. 政府對工資收入徵收的稅", "B. 政府對資本增值徵收的稅", "C. 對儲蓄徵收的稅", "D. 企業所得稅"],
-                    "correct": 1,
-                    "explanation": "資本利得稅是對投資者在出售資產（如股票、房地產）後，所獲得的資本增值徵收的稅。"
-                },
-                {
-                    "question": "26. 長期投資的主要風險是什麼？",
-                    "options": ["A. 市場波動", "B. 投資過度集中", "C. 不確定的回報", "D. 上述皆是"],
-                    "correct": 3,
-                    "explanation": "長期投資面臨的風險包括市場波動、資產集中風險以及回報的不確定性。"
-                },
-                {
-                    "question": "27. 什麼是股息收入？",
-                    "options": ["A. 公司分紅的收入", "B. 資本增值的收入", "C. 只來自股票的收入", "D. 只來自政府的補助"],
-                    "correct": 0,
-                    "explanation": "股息收入是指公司按照股東持股比例分配的利潤，通常是每年或每季度支付。"
-                },
-                {
-                    "question": "28. 什麼是風險與回報的關係？",
-                    "options": ["A. 風險越高，回報越低", "B. 風險和回報之間沒有關係", "C. 風險越高，回報潛力越高", "D. 回報永遠固定"],
-                    "correct": 2,
-                    "explanation": "風險和回報之間通常是正相關的，風險越高，投資者期望的回報潛力也越高。"
-                },
-                {
-                    "question": "29. 什麼是ESG投資？",
-                    "options": ["A. 投資於高回報公司", "B. 根據環境、社會和治理標準進行投資", "C. 只考慮股息收益的投資", "D. 投資於加密貨幣"],
-                    "correct": 1,
-                    "explanation": "ESG投資是根據環境（E）、社會（S）和治理（G）標準來選擇投資標的，以實現財務回報和社會責任的平衡。"
-                },
-                {
-                    "question": "30. 什麼是回報率？",
-                    "options": ["A. 投資的總收入", "B. 投資的增值比例", "C. 只考慮股票收益", "D. 投資的風險比例"],
-                    "correct": 1,
-                    "explanation": "回報率是指投資增值的比例，通常用於衡量投資的盈利能力。"
-                }
-            ]
-        };
+        const questions = [
+            {
+                "question": "1. 以下哪種情況最能減少投資風險？",
+                "options": ["A. 投資於單一股票", "B. 全部資金投入房地產", "C. 分散投資於多種資產", "D. 大量購買黃金"],
+                "correct": 2,
+                "explanation": "分散投資有助於降低風險，因為資產的價格波動通常不一致。"
+            },
+            {
+                "question": "2. 如果市場波動較大，哪種策略較為合適？",
+                "options": ["A. 順勢追高", "B. 快速賣出持有資產", "C. 保持耐心和長期投資策略", "D. 不斷更換投資標的"],
+                "correct": 2,
+                "explanation": "在波動性高的市場中，保持長期投資心態能降低因短期市場波動而導致的損失。"
+            },
+            {
+                "question": "3. 下列哪種資產適合抵禦長期的通貨膨脹風險？",
+                "options": ["A. 債券", "B. 股票", "C. 黃金", "D. 定存"],
+                "correct": 2,
+                "explanation": "黃金被視為對抗通膨的避險資產，能夠在通貨膨脹時保持價值。"
+            },
+            {
+                "question": "4. 為何在退休規劃中應該考慮加密貨幣投資？",
+                "options": ["A. 高收益潛力", "B. 穩定回報", "C. 可隨時提領", "D. 高風險但增值潛力大"],
+                "correct": 3,
+                "explanation": "加密貨幣具有高風險和高回報，適合具有較高風險承受能力的投資者。"
+            },
+            {
+                "question": "5. 若投資者的風險承受度較低，應該如何選擇投資工具？",
+                "options": ["A. 高風險的股票", "B. 穩定回報的債券", "C. 高報酬的創業投資", "D. 加密貨幣"],
+                "correct": 1,
+                "explanation": "債券通常提供穩定回報，較適合風險承受度較低的投資者。"
+            },
+            {
+                "question": "6. 在選擇投資基金時，應該考慮哪些因素？",
+                "options": ["A. 基金過往的績效", "B. 基金的費用結構", "C. 基金經理的經驗", "D. 以上皆是"],
+                "correct": 3,
+                "explanation": "選擇基金時，應綜合考慮基金的過往績效、費用結構和基金經理的管理經驗等多方面因素。"
+            },
+            {
+                "question": "7. 股票市場中的市盈率（P/E Ratio）用於衡量什麼？",
+                "options": ["A. 公司利潤與股價之比", "B. 公司營收與利潤之比", "C. 公司負債與股東資本之比", "D. 以上皆非"],
+                "correct": 0,
+                "explanation": "市盈率（P/E Ratio）是用來衡量公司股價與其每股盈餘的比例，反映市場對公司未來成長的預期。"
+            },
+            {
+                "question": "8. 若想在長期內獲得穩定的回報，應選擇何種資產配置？",
+                "options": ["A. 完全投入股票市場", "B. 完全投入債券市場", "C. 股票與債券的適當混合", "D. 只選擇高報酬的資產"],
+                "correct": 2,
+                "explanation": "穩定回報的資產配置應該考慮股票與債券的適當搭配，以達到風險與回報的平衡。"
+            },
+            {
+                "question": "9. 保險對投資理財的主要作用是什麼？",
+                "options": ["A. 保障資本增值", "B. 提供保險金與保障", "C. 增加投資回報", "D. 減少市場風險"],
+                "correct": 1,
+                "explanation": "保險的主要功能是提供風險保障，防範突發的財務風險。"
+            },
+            {
+                "question": "10. 投資者在退休規劃中應該如何避免過早賣出資產？",
+                "options": ["A. 定期檢視資產配置", "B. 設定投資目標和時間表", "C. 保持長期投資心態", "D. 以上皆是"],
+                "correct": 3,
+                "explanation": "為了避免過早賣出資產，投資者應該設立明確的目標、時間表並保持長期投資心態。"
+            }
+        ];
 
         let currentQuestion = 0;
-        let score = 0;
-        let feedback = [];
+        let correctAnswers = 0;
+        const feedback = [];
 
         function loadQuestion() {
-            const questionData = questions[level][currentQuestion];
+            const questionData = questions[currentQuestion];
             if (!questionData) {
-                document.getElementById('question-container').innerHTML = `測驗完成！正確率：${Math.round((score / questions[level].length) * 100)}%`;
+                const accuracy = calculateAccuracy();
+                document.getElementById('question-container').innerHTML = `
+                    測驗完成！正確率：${accuracy}%<br>
+                    <button onclick="submitFeedback()">提交回饋</button>
+                `;
                 return;
             }
 
             const container = document.getElementById('question-container');
             container.innerHTML = `
-                    <p>${questionData.question}</p>
-                    ${questionData.options.map((option, index) => `
-                        <button onclick="checkAnswer(${index})">${option}</button>
-                    `).join('')}
-                `;
+                <p>${questionData.question}</p>
+                ${questionData.options.map((option, index) => `
+                    <button onclick="checkAnswer(${index})">${option}</button>
+                `).join('')}
+                <div id="feedback-container" style="display: none;">
+                    <p>解析：${questionData.explanation}</p>
+                    <label>此解析的有用程度（1-3分）：</label>
+                    <select id="feedback-score">
+                        <option value="1">1 - 不太有用</option>
+                        <option value="2">2 - 普通</option>
+                        <option value="3">3 - 很有用</option>
+                    </select>
+                    <button onclick="submitSingleFeedback()">下一題</button>
+                </div>
+            `;
         }
 
         function checkAnswer(selected) {
-            const questionData = questions[level][currentQuestion];
+            const questionData = questions[currentQuestion];
             if (selected === questionData.correct) {
-                score++;
+                correctAnswers++;
                 alert("正確！");
+                currentQuestion++;
+                loadQuestion();
             } else {
-                alert(`錯誤！正確答案是：${questionData.options[questionData.correct]}\n解析：${questionData.explanation}`);
-
-                // 僅在答錯時顯示「此解析是否對您有幫助」的確認視窗
-                const isHelpful = confirm("此解析對您是否有幫助？（按確定表示有，取消表示無）");
-                feedback.push({ question: questionData.question, helpful: isHelpful });
+                alert(`錯誤！正確答案是：${questionData.options[questionData.correct]}`);
+                document.getElementById('feedback-container').style.display = 'block';
             }
+        }
 
+        function submitSingleFeedback() {
+            const feedbackScore = document.getElementById('feedback-score').value;
+            feedback.push({
+                question: questions[currentQuestion].question,
+                score: parseInt(feedbackScore)
+            });
+            document.getElementById('feedback-container').style.display = 'none';
             currentQuestion++;
             loadQuestion();
         }
 
-        function submitFeedback() {
-            const statsRef = db.ref('quizStats');
-            statsRef.once('value').then((snapshot) => {
-                const stats = snapshot.val() || { participants: 0, totalScore: 0, helpfulCount: 0, totalErrors: 0 };
-
-                // 計算錯誤題數中被標記為「有幫助」的題數
-                const helpfulErrors = feedback.filter(f => !f.correct && f.helpful).length;
-                const totalErrors = feedback.filter(f => !f.correct).length;
-
-                stats.participants += 1;
-                stats.totalScore += score;
-                stats.totalErrors += totalErrors;
-                stats.helpfulCount += helpfulErrors;
-
-                statsRef.set(stats);
-                alert("感謝您的參與！測驗結果已提交。");
-                window.location.href = "index.html";
-            });
+        function calculateAccuracy() {
+            const accuracy = ((correctAnswers / questions.length) * 100).toFixed(2);
+            return accuracy > 100 ? 100 : accuracy; // 保證正確率不會超過100%
         }
 
+        function submitFeedback() {
+            const levelRef = db.ref('quizStats/level2');
+            levelRef.once('value').then((snapshot) => {
+                const stats = snapshot.val() || { participants: 0, correctCount: 0, scoreCount1: 0, scoreCount2: 0, scoreCount3: 0 };
+
+                // 更新参与人数和正确回答数
+                stats.participants += 1;
+                stats.correctCount += correctAnswers;
+
+                // 统计反馈分数
+                const scoreCount1 = feedback.filter(item => item.score === 1).length;
+                const scoreCount2 = feedback.filter(item => item.score === 2).length;
+                const scoreCount3 = feedback.filter(item => item.score === 3).length;
+
+                // 更新各反馈分数统计
+                stats.scoreCount1 += scoreCount1;
+                stats.scoreCount2 += scoreCount2;
+                stats.scoreCount3 += scoreCount3;
+
+                // 更新数据库
+                return levelRef.set(stats);
+            }).then(() => {
+                // 更新完成后跳转
+                alert("感謝您的參與！測驗結果已提交。");
+                window.location.href = "index.html"; // 跳转到首页
+            }).catch((error) => {
+                // 处理错误
+                console.error("提交失败：", error);
+                alert("提交失败，请稍后重试。");
+            });
+        }
 
         loadQuestion();
     </script>

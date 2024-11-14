@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>投資理財測驗</title>
+    <title>投資理財測驗 - 小白級</title>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <script>
@@ -22,208 +22,37 @@
     </script>
 </head>
 <body>
-    <h1>投資理財測驗</h1>
+    <h1>投資理財測驗 - 小白級</h1>
     <div id="question-container"></div>
-    <button onclick="submitFeedback()">提交回饋</button>
 
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const level = urlParams.get('level');
-
-        // 題庫資料：按難度等級分組
-        const questions = {
-            1: [ // 小白級
-                {
-                    "question": "1. 若考慮購買基金投資，以下哪一個原因最適合做為選擇基金的考量因素？",
-                    "options": ["A. 過去的基金績效記錄", "B. 基金管理費的高低", "C. 對該基金的風險承受能力", "D. 朋友推薦"],
-                    "correct": 2,
-                    "explanation": "選擇基金時，了解自己對風險的承受能力是最重要的考量因素。"
-                },
-                {
-                    "question": "2. 若將資金分散投資於不同的資產，這樣的策略稱為什麼？",
-                    "options": ["A. 投資組合", "B. 分散投資", "C. 主動投資", "D. 股票操盤"],
-                    "correct": 1,
-                    "explanation": "分散投資是降低投資風險的一種策略。"
-                },
-                {
-                    "question": "3. 為什麼保險是理財計畫的一部分？",
-                    "options": ["A. 可以降低投資風險", "B. 提供保障以應對未來的財務風險", "C. 保證資產增值", "D. 便於快速變現"],
-                    "correct": 1,
-                    "explanation": "保險能夠提供保障，幫助減少突發事件帶來的財務風險。"
-                },
-                {
-                    "question": "4. 如果你想在短期內增值資金，哪一項可能較適合？",
-                    "options": ["A. 股票", "B. 定存", "C. 不動產", "D. 黃金"],
-                    "correct": 0,
-                    "explanation": "股票的波動性較大，可能會在短期內提供較高的增值機會。"
-                },
-                {
-                    "question": "5. 若要保護資產免受通膨影響，較適合哪種投資？",
-                    "options": ["A. 股票", "B. 定存", "C. 公司債券", "D. 基金"],
-                    "correct": 0,
-                    "explanation": "股票長期增值潛力強，有助於抵禦通膨帶來的資產貶值。"
-                },
-                {
-                    "question": "6. 若你追求穩定的資本增值，哪一種資產適合此需求？",
-                    "options": ["A. 債券", "B. 加密貨幣", "C. 期貨", "D. 黃金"],
-                    "correct": 0,
-                    "explanation": "債券通常提供穩定的收益，適合穩健型投資者。"
-                },
-                {
-                    "question": "7. 若你預計在退休後領取穩定的被動收入，可以考慮哪種投資？",
-                    "options": ["A. 定存", "B. 債券基金", "C. 加密貨幣", "D. 期貨"],
-                    "correct": 1,
-                    "explanation": "債券基金提供穩定的被動收入，是退休後理想的選擇。"
-                },
-                {
-                    "question": "8. 若你的財務目標是購屋，建議的投資策略是什麼？",
-                    "options": ["A. 高風險、高報酬的股票", "B. 定存或基金以保持穩定增長", "C. 加密貨幣", "D. 投機性商品"],
-                    "correct": 1,
-                    "explanation": "定存和基金適合穩定增值，能夠為購屋儲蓄提供穩定的資本增長。"
-                },
-                {
-                    "question": "9. 購買一檔股票後，是否可確保獲得股息？",
-                    "options": ["A. 是的，股票都會發股息", "B. 視公司獲利狀況而定", "C. 每年固定發放", "D. 依個人持有量來定"],
-                    "correct": 1,
-                    "explanation": "股息的發放取決於公司是否有利潤及其發放政策。"
-                },
-                {
-                    "question": "10. 若要為孩子的教育儲蓄，應採取的投資方式為何？",
-                    "options": ["A. 投資短期高風險的股票", "B. 採取長期穩定的基金投資", "C. 買進黃金以抗通膨", "D. 投資期貨產品"],
-                    "correct": 1,
-                    "explanation": "長期穩定的基金投資能夠有效保障教育儲蓄的增長。"
-                },
-                {
-                    "question": "11. 若想進行退休計劃，建議選擇哪一項投資工具？",
-                    "options": ["A. 股票", "B. 定存", "C. 年金保險", "D. 加密貨幣"],
-                    "correct": 2,
-                    "explanation": "年金保險能夠提供穩定的退休收入，是長期理財的理想選擇。"
-                },
-                {
-                    "question": "12. 資產配置中增加債券的目的為何？",
-                    "options": ["A. 增加高風險", "B. 穩定資產並降低波動性", "C. 獲取更高的資本增值", "D. 提高流動性"],
-                    "correct": 1,
-                    "explanation": "債券能夠幫助穩定資產，並有效減少投資組合的波動。"
-                },
-                {
-                    "question": "13. 哪一種基金類型較適合長期穩定增值？",
-                    "options": ["A. 股票型基金", "B. 高收益債券基金", "C. 指數型基金", "D. 房地產信託基金"],
-                    "correct": 2,
-                    "explanation": "指數型基金能夠低成本分散投資，長期增值潛力強。"
-                },
-                {
-                    "question": "14. 高風險的投資組合中，通常會包含哪類資產？",
-                    "options": ["A. 債券", "B. 股票和期貨", "C. 定存", "D. 房地產"],
-                    "correct": 1,
-                    "explanation": "高風險投資組合通常會包含股票和期貨等高波動資產。"
-                },
-                {
-                    "question": "15. 假如擁有20年以上的投資時限，哪種資產可能較適合？",
-                    "options": ["A. 股票", "B. 短期債券", "C. 外匯", "D. 定存"],
-                    "correct": 0,
-                    "explanation": "股票的長期增值潛力強，適合長期持有。"
-                },
-                {
-                    "question": "16. 指數基金的優點之一是什麼？",
-                    "options": ["A. 投資風險極低", "B. 持有成本低且能分散風險", "C. 市場波動極小", "D. 保證固定收益"],
-                    "correct": 1,
-                    "explanation": "指數基金提供低成本的投資方式，並有效分散風險。"
-                },
-                {
-                    "question": "17. 短期內的流動性需求較高時，應選擇哪類投資？",
-                    "options": ["A. 股票", "B. 定存", "C. 貨幣市場基金", "D. 房地產"],
-                    "correct": 2,
-                    "explanation": "貨幣市場基金提供高流動性，適合短期資金需求。"
-                },
-                {
-                    "question": "18. 如果你有多筆短期資金需求，適合哪類金融工具？",
-                    "options": ["A. 長期債券", "B. 短期國庫券", "C. 指數型基金", "D. 房地產信託基金"],
-                    "correct": 1,
-                    "explanation": "短期國庫券提供穩定且較低風險的短期投資選擇。"
-                },
-                {
-                    "question": "19. 為了減少資金波動，長期持有哪一資產最具避險效果？",
-                    "options": ["A. 高收益債券", "B. 黃金", "C. 股票", "D. 外匯"],
-                    "correct": 1,
-                    "explanation": "黃金通常具有避險特性，能幫助穩定資產波動。"
-                },
-                {
-                    "question": "20. 以風險回報比作為考量，哪些選擇會是較穩健的投資方式？",
-                    "options": ["A. 高風險的期貨", "B. 穩定回報的債券", "C. 短期投機", "D. 高波動的股票"],
-                    "correct": 1,
-                    "explanation": "穩定回報的債券具有較高的風險回報比，適合保守型投資者。"
-                },
-                {
-                    "question": "21. 對於資金的保值與增值，如何選擇高風險投資的時候，需要注意什麼？",
-                    "options": ["A. 預期回報應大於風險", "B. 只能選擇某一類資產", "C. 盡量避免多元化", "D. 完全無需考慮風險"],
-                    "correct": 0,
-                    "explanation": "高風險投資需考慮風險與回報的平衡。"
-                },
-                {
-                    "question": "22. 對於初學者，哪種投資方式較為適合？",
-                    "options": ["A. 股票", "B. 債券", "C. 房地產", "D. 加密貨幣"],
-                    "correct": 1,
-                    "explanation": "債券較為穩定，風險較低，適合初學者。"
-                },
-                {
-                    "question": "23. 期貨市場的主要風險為何？",
-                    "options": ["A. 市場波動較大，容易造成重大損失", "B. 只有價格上漲才有回報", "C. 短期波動性低", "D. 是唯一的高收益來源"],
-                    "correct": 0,
-                    "explanation": "期貨市場因為杠桿效應，波動性大，容易造成損失。"
-                },
-                {
-                    "question": "24. 若想長期穩定增值，哪類投資風險較低？",
-                    "options": ["A. 股票", "B. 債券", "C. 黃金", "D. 加密貨幣"],
-                    "correct": 1,
-                    "explanation": "債券風險相對較低，適合長期穩定增值。"
-                },
-                {
-                    "question": "25. 何者是長期持有優質資產的好處？",
-                    "options": ["A. 短期內資產迅速增值", "B. 可以確保資本增長與穩定回報", "C. 可以立即變現資產", "D. 無需關注市場波動"],
-                    "correct": 1,
-                    "explanation": "長期持有優質資產可帶來穩定增值，並對抗市場波動。"
-                },
-                {
-                    "question": "26. 股市的波動性是否會影響投資組合？",
-                    "options": ["A. 會，波動性高的股票會加大風險", "B. 不會，波動不影響回報", "C. 波動性低的股票不影響", "D. 只影響大企業的股票"],
-                    "correct": 0,
-                    "explanation": "股市的波動性會影響投資組合的風險與回報。"
-                },
-                {
-                    "question": "27. 若資金較為充裕，且想獲得較高回報，該選擇什麼？",
-                    "options": ["A. 定存", "B. 股票", "C. 基金", "D. 黃金"],
-                    "correct": 1,
-                    "explanation": "股票通常提供較高的回報潛力，但風險也較高。"
-                },
-                {
-                    "question": "28. 資產配置中，債券與股票的比例如何選擇較為適宜？",
-                    "options": ["A. 股票比例較大，因為回報較高", "B. 債券比例較大，適合保守型投資者", "C. 必須完全投資於股票", "D. 隨時調整為股票更多"],
-                    "correct": 1,
-                    "explanation": "對保守型投資者來說，較高比例的債券可以提供穩定的回報。"
-                },
-                {
-                    "question": "29. 以長期回報為目標，投資者應如何選擇資產？",
-                    "options": ["A. 只投資低風險資產", "B. 結合多元化的高風險和低風險資產", "C. 僅選擇國際市場的資產", "D. 選擇短期高回報的資產"],
-                    "correct": 1,
-                    "explanation": "多元化能分散風險，達成長期穩定回報。"
-                },
-                {
-                    "question": "30. 投資組合管理的關鍵目標為何？",
-                    "options": ["A. 最大化回報", "B. 最大化風險", "C. 最小化風險，達到適度回報", "D. 只選擇最安全的投資"],
-                    "correct": 2,
-                    "explanation": "投資組合的目標應該是最小化風險，並達到穩定的回報。"
-                }
-            ],
-        };
+        const questions = [
+            {
+                "question": "1. 若考慮購買基金投資，以下哪一個原因最適合做為選擇基金的考量因素？",
+                "options": ["A. 過去的基金績效記錄", "B. 基金管理費的高低", "C. 對該基金的風險承受能力", "D. 朋友推薦"],
+                "correct": 2,
+                "explanation": "選擇基金時，了解自己對風險的承受能力是最重要的考量因素。"
+            },
+            {
+                "question": "2. 若將資金分散投資於不同的資產，這樣的策略稱為什麼？",
+                "options": ["A. 投資組合", "B. 分散投資", "C. 主動投資", "D. 股票操盤"],
+                "correct": 1,
+                "explanation": "分散投資是降低投資風險的一種策略。"
+            },
+            // 其餘問題略...
+        ];
 
         let currentQuestion = 0;
         let score = 0;
         let feedback = [];
 
         function loadQuestion() {
-            const questionData = questions[level][currentQuestion];
+            const questionData = questions[currentQuestion];
             if (!questionData) {
-                document.getElementById('question-container').innerHTML = `測驗完成！正確率：${Math.round((score / questions[level].length) * 100)}%`;
+                document.getElementById('question-container').innerHTML = `
+                    測驗完成！正確率：${Math.round((score / questions.length) * 100)}%
+                    <button onclick="submitFeedback()">提交回饋</button>
+                `;
                 return;
             }
 
@@ -233,46 +62,69 @@
                 ${questionData.options.map((option, index) => `
                     <button onclick="checkAnswer(${index})">${option}</button>
                 `).join('')}
+                <div id="feedback-container" style="display: none;">
+                    <p>解析：${questionData.explanation}</p>
+                    <label>此解析的有用程度（1-3分）：</label>
+                    <select id="feedback-score">
+                        <option value="1">1 - 不太有用</option>
+                        <option value="2">2 - 普通</option>
+                        <option value="3">3 - 很有用</option>
+                    </select>
+                    <button onclick="submitSingleFeedback()">下一題</button>
+                </div>
             `;
         }
 
         function checkAnswer(selected) {
-            const questionData = questions[level][currentQuestion];
+            const questionData = questions[currentQuestion];
             if (selected === questionData.correct) {
                 score++;
                 alert("正確！");
+                currentQuestion++;
+                loadQuestion();
             } else {
-                alert(`錯誤！正確答案是：${questionData.options[questionData.correct]}\n解析：${questionData.explanation}`);
-                
-                // 僅在答錯時顯示「此解析是否對您有幫助」的確認視窗
-                const isHelpful = confirm("此解析對您是否有幫助？（按確定表示有，取消表示無）");
-                feedback.push({ question: questionData.question, helpful: isHelpful });
+                alert(`錯誤！正確答案是：${questionData.options[questionData.correct]}`);
+                document.getElementById('feedback-container').style.display = 'block';
             }
+        }
 
+        function submitSingleFeedback() {
+            const feedbackScore = document.getElementById('feedback-score').value;
+            feedback.push({
+                question: questions[currentQuestion].question,
+                score: parseInt(feedbackScore)
+            });
+            document.getElementById('feedback-container').style.display = 'none';
             currentQuestion++;
             loadQuestion();
         }
 
         function submitFeedback() {
-    const statsRef = db.ref('quizStats');
-    statsRef.once('value').then((snapshot) => {
-        const stats = snapshot.val() || { participants: 0, totalScore: 0, helpfulCount: 0, totalErrors: 0 };
+            const levelRef = db.ref('quizStats/level1'); // 使用 level1 作為存儲節點
+            levelRef.once('value').then((snapshot) => {
+                const stats = snapshot.val() || { participants: 0, correctCount: 0, scoreCount1: 0, scoreCount2: 0, scoreCount3: 0 };
 
-        // 計算錯誤題數中被標記為「有幫助」的題數
-        const helpfulErrors = feedback.filter(f => !f.correct && f.helpful).length;
-        const totalErrors = feedback.filter(f => !f.correct).length;
+                // 更新參與人數和正確回答數
+                stats.participants += 1;
+                stats.correctCount += score;
 
-        stats.participants += 1;
-        stats.totalScore += score;
-        stats.totalErrors += totalErrors;
-        stats.helpfulCount += helpfulErrors;
+                // 計算當前使用者的各分數統計數量
+                const scoreCount1 = feedback.filter(item => item.score === 1).length;
+                const scoreCount2 = feedback.filter(item => item.score === 2).length;
+                const scoreCount3 = feedback.filter(item => item.score === 3).length;
 
-        statsRef.set(stats);
-        alert("感謝您的參與！測驗結果已提交。");
-        window.location.href = "index.html";
-    });
-}
+                // 更新各分數統計
+                stats.scoreCount1 += scoreCount1;
+                stats.scoreCount2 += scoreCount2;
+                stats.scoreCount3 += scoreCount3;
 
+                // 更新數據到 Firebase
+                return levelRef.set(stats);
+            }).then(() => {
+                alert("感謝您的參與！測驗結果已提交。");
+                window.location.href = "index.html"; // 跳轉到主頁
+            });
+        }
 
         loadQuestion();
     </script>

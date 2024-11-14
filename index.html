@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>投資理財測驗 - 難度選擇</title>
+    <title>投資理財測驗結果</title>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <script>
@@ -19,36 +19,93 @@
         };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
+
+        // 讀取每個測驗級別的統計數據
+        function loadStats(level) {
+            const levelRef = db.ref(`quizStats/${level}`);
+            return levelRef.once('value').then((snapshot) => {
+                const stats = snapshot.val() || {
+                    participants: 0,
+                    correctCount: 0,
+                    scoreCount1: 0,
+                    scoreCount2: 0,
+                    scoreCount3: 0
+                };
+
+                // 計算解析有用程度百分比
+                const totalFeedback = stats.scoreCount1 + stats.scoreCount2 + stats.scoreCount3;
+                const percentage1 = totalFeedback > 0 ? ((stats.scoreCount1 / totalFeedback) * 100).toFixed(2) : 0;
+                const percentage2 = totalFeedback > 0 ? ((stats.scoreCount2 / totalFeedback) * 100).toFixed(2) : 0;
+                const percentage3 = totalFeedback > 0 ? ((stats.scoreCount3 / totalFeedback) * 100).toFixed(2) : 0;
+
+                // 顯示統計資料
+                document.getElementById(`${level}-participants`).innerText = stats.participants;
+                document.getElementById(`${level}-correct`).innerText = stats.correctCount;
+                document.getElementById(`${level}-scoreCount1`).innerText = `${percentage1}%`;
+                document.getElementById(`${level}-scoreCount2`).innerText = `${percentage2}%`;
+                document.getElementById(`${level}-scoreCount3`).innerText = `${percentage3}%`;
+
+                return stats.participants;
+            }).catch((error) => {
+                console.error(`無法載入 ${level} 的統計數據: `, error);
+                return 0;
+            });
+        }
+
+        // 計算並顯示總參與人數
+        function loadTotalParticipants() {
+            const levels = ["level1", "level2", "level3"];
+            let totalParticipants = 0;
+
+            // 載入每個級別的統計數據並加總參與人數
+            const promises = levels.map(level => {
+                return loadStats(level).then(participants => {
+                    totalParticipants += participants;
+                });
+            });
+
+            // 當所有級別的數據加載完畢後，顯示總參與人數
+            Promise.all(promises).then(() => {
+                document.getElementById('total-participants').innerText = totalParticipants;
+            });
+        }
+
+        window.onload = function() {
+            // 載入所有級別的統計數據並計算總參與人數
+            loadTotalParticipants();
+        };
     </script>
 </head>
 <body>
-    <h1>投資理財測驗</h1>
-    <p>請選擇測驗難度：</p>
-    <button onclick="startQuiz(1)">小白級 (難度 1)</button>
-    <button onclick="startQuiz(2)">菜鳥級 (難度 2)</button>
-    <button onclick="startQuiz(3)">老手級 (難度 3)</button>
+    <h1>投資理財測驗結果</h1>
 
-    <h2>測驗回饋統計</h2>
-    <div id="feedback-stats">
-        <p>參與人數：<span id="total-participants">0</span></p>
-        <p>覺得詳解有幫助的比例：<span id="helpful-rate">0%</span></p>
-    </div>
+    <h2>選擇測驗級別</h2>
+    <button onclick="window.location.href='quiz_level_1.html'">小白級 (Level 1)</button>
+    <button onclick="window.location.href='quiz_level_2.html'">進階級 (Level 2)</button>
+    <button onclick="window.location.href='quiz_level_3.html'">專家級 (Level 3)</button>
 
-    <script>
-        function startQuiz(level) {
-            window.location.href = `quiz_level_${level}.html?level=${level}`;
-        }
+    <h2>總參與人數: <span id="total-participants">0</span></h2>
 
-        // 監聽 Firebase 資料變化
-        const statsRef = db.ref('quizStats');
-        statsRef.on('value', (snapshot) => {
-            const stats = snapshot.val() || { participants: 0, totalScore: 0, helpfulCount: 0, totalErrors: 0 };
-            document.getElementById('total-participants').textContent = stats.participants;
+    <h2>小白級 (Level 1)</h2>
+    <p>參與人數: <span id="level1-participants">0</span></p>
+    <p>正確回答數: <span id="level1-correct">0</span></p>
+    <p>解析有用程度 1 分數: <span id="level1-scoreCount1">0%</span></p>
+    <p>解析有用程度 2 分數: <span id="level1-scoreCount2">0%</span></p>
+    <p>解析有用程度 3 分數: <span id="level1-scoreCount3">0%</span></p>
 
-            // 以錯誤題數為基礎計算「有幫助」比例
-            const helpfulRate = stats.totalErrors > 0 ? Math.round((stats.helpfulCount / stats.totalErrors) * 100) : 0;
-            document.getElementById('helpful-rate').textContent = `${helpfulRate}%`;
-        });
-    </script>
+    <h2>進階級 (Level 2)</h2>
+    <p>參與人數: <span id="level2-participants">0</span></p>
+    <p>正確回答數: <span id="level2-correct">0</span></p>
+    <p>解析有用程度 1 分數: <span id="level2-scoreCount1">0%</span></p>
+    <p>解析有用程度 2 分數: <span id="level2-scoreCount2">0%</span></p>
+    <p>解析有用程度 3 分數: <span id="level2-scoreCount3">0%</span></p>
+
+    <h2>專家級 (Level 3)</h2>
+    <p>參與人數: <span id="level3-participants">0</span></p>
+    <p>正確回答數: <span id="level3-correct">0</span></p>
+    <p>解析有用程度 1 分數: <span id="level3-scoreCount1">0%</span></p>
+    <p>解析有用程度 2 分數: <span id="level3-scoreCount2">0%</span></p>
+    <p>解析有用程度 3 分數: <span id="level3-scoreCount3">0%</span></p>
+
 </body>
 </html>
