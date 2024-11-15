@@ -28,64 +28,183 @@
     <script>
         const questions = [
             {
-                "question": "1. 以下哪種情況最能減少投資風險？",
-                "options": ["A. 投資於單一股票", "B. 全部資金投入房地產", "C. 分散投資於多種資產", "D. 大量購買黃金"],
+                "question": "1. 什麼是資產配置？",
+                "options": ["A. 只考慮儲蓄", "B. 僅投資於股票", "C. 根據風險和收益分配資產", "D. 不需要考慮"],
                 "correct": 2,
-                "explanation": "分散投資有助於降低風險，因為資產的價格波動通常不一致。"
+                "explanation": "資產配置是根據風險承受能力和預期回報，將資金分配到不同的資產類別（如股票、債券、現金等）。"
             },
             {
-                "question": "2. 如果市場波動較大，哪種策略較為合適？",
-                "options": ["A. 順勢追高", "B. 快速賣出持有資產", "C. 保持耐心和長期投資策略", "D. 不斷更換投資標的"],
-                "correct": 2,
-                "explanation": "在波動性高的市場中，保持長期投資心態能降低因短期市場波動而導致的損失。"
-            },
-            {
-                "question": "3. 下列哪種資產適合抵禦長期的通貨膨脹風險？",
-                "options": ["A. 債券", "B. 股票", "C. 黃金", "D. 定存"],
-                "correct": 2,
-                "explanation": "黃金被視為對抗通膨的避險資產，能夠在通貨膨脹時保持價值。"
-            },
-            {
-                "question": "4. 為何在退休規劃中應該考慮加密貨幣投資？",
-                "options": ["A. 高收益潛力", "B. 穩定回報", "C. 可隨時提領", "D. 高風險但增值潛力大"],
-                "correct": 3,
-                "explanation": "加密貨幣具有高風險和高回報，適合具有較高風險承受能力的投資者。"
-            },
-            {
-                "question": "5. 若投資者的風險承受度較低，應該如何選擇投資工具？",
-                "options": ["A. 高風險的股票", "B. 穩定回報的債券", "C. 高報酬的創業投資", "D. 加密貨幣"],
-                "correct": 1,
-                "explanation": "債券通常提供穩定回報，較適合風險承受度較低的投資者。"
-            },
-            {
-                "question": "6. 在選擇投資基金時，應該考慮哪些因素？",
-                "options": ["A. 基金過往的績效", "B. 基金的費用結構", "C. 基金經理的經驗", "D. 以上皆是"],
-                "correct": 3,
-                "explanation": "選擇基金時，應綜合考慮基金的過往績效、費用結構和基金經理的管理經驗等多方面因素。"
-            },
-            {
-                "question": "7. 股票市場中的市盈率（P/E Ratio）用於衡量什麼？",
-                "options": ["A. 公司利潤與股價之比", "B. 公司營收與利潤之比", "C. 公司負債與股東資本之比", "D. 以上皆非"],
+                "question": "2. 在投資中，什麼是風險承受能力？",
+                "options": ["A. 投資者能接受的損失程度", "B. 只關心收益", "C. 僅限於短期投資", "D. 無需關心"],
                 "correct": 0,
-                "explanation": "市盈率（P/E Ratio）是用來衡量公司股價與其每股盈餘的比例，反映市場對公司未來成長的預期。"
+                "explanation": "風險承受能力指的是投資者在承擔損失的情況下，能夠保持理性投資的能力。"
             },
             {
-                "question": "8. 若想在長期內獲得穩定的回報，應選擇何種資產配置？",
-                "options": ["A. 完全投入股票市場", "B. 完全投入債券市場", "C. 股票與債券的適當混合", "D. 只選擇高報酬的資產"],
-                "correct": 2,
-                "explanation": "穩定回報的資產配置應該考慮股票與債券的適當搭配，以達到風險與回報的平衡。"
-            },
-            {
-                "question": "9. 保險對投資理財的主要作用是什麼？",
-                "options": ["A. 保障資本增值", "B. 提供保險金與保障", "C. 增加投資回報", "D. 減少市場風險"],
+                "question": "3. 定投的主要好處是什麼？",
+                "options": ["A. 只關心短期收益", "B. 平攤風險和成本", "C. 僅限於特定資產", "D. 無需考慮"],
                 "correct": 1,
-                "explanation": "保險的主要功能是提供風險保障，防範突發的財務風險。"
+                "explanation": "定期定額投資有助於分散風險，並且在長期內平攤成本，減少市場波動的影響。"
             },
             {
-                "question": "10. 投資者在退休規劃中應該如何避免過早賣出資產？",
-                "options": ["A. 定期檢視資產配置", "B. 設定投資目標和時間表", "C. 保持長期投資心態", "D. 以上皆是"],
+                "question": "4. 什麼是投資組合？",
+                "options": ["A. 無需考慮", "B. 只包含股票的投資", "C. 僅限於債券", "D. 不同類型的投資資產組合"],
                 "correct": 3,
-                "explanation": "為了避免過早賣出資產，投資者應該設立明確的目標、時間表並保持長期投資心態。"
+                "explanation": "投資組合是指將不同類型的資產（如股票、債券、不動產等）組合在一起進行投資，以達到風險分散的目的。"
+            },
+            {
+                "question": "5. 什麼是市場波動？",
+                "options": ["A. 市場價格的上下波動", "B. 僅指股票", "C. 不影響投資", "D. 只有短期影響"],
+                "correct": 0,
+                "explanation": "市場波動是指資產價格在短期內的不斷變動，這會對投資者的決策和投資表現產生影響。"
+            },
+            {
+                "question": "6. 購買房產的主要成本包括什麼？",
+                "options": ["A. 只有稅費", "B. 僅限於購買價格", "C. 首付、貸款利息和維護費用", "D. 無需考慮"],
+                "correct": 2,
+                "explanation": "購房的主要成本包括首付、貸款利息和日常維護費用。"
+            },
+            {
+                "question": "7. 什麼是短期投資？",
+                "options": ["A. 只能長期持有", "B. 通常持有一年或以下的投資", "C. 只限於股票", "D. 無需考慮"],
+                "correct": 1,
+                "explanation": "短期投資通常指持有一年或以下的投資，目的在於獲取快速的回報。"
+            },
+            {
+                "question": "8. 為什麼要制定財務目標？",
+                "options": ["A. 幫助管理財務和投資", "B. 只考慮短期需求", "C. 無需目標", "D. 僅限於高收入者"],
+                "correct": 0,
+                "explanation": "制定財務目標可以幫助規劃和管理資金，確保財務健康和達成長期目標。"
+            },
+            {
+                "question": "9. 什麼是信用評分？",
+                "options": ["A. 僅限於企業", "B. 只針對銀行", "C. 評估個人信用風險的指標", "D. 無需考慮"],
+                "correct": 2,
+                "explanation": "信用評分是根據個人的財務行為（如還款紀錄）來評估信用風險的數據指標。"
+            },
+            {
+                "question": "10. 如何提高信用評分？",
+                "options": ["A. 只關心短期收益", "B. 隨便借貸", "C. 按時還款和保持低負債", "D. 無需管理"],
+                "correct": 2,
+                "explanation": "提高信用評分的關鍵是按時還款，保持低負債比率，並合理管理財務。"
+            },
+            {
+                "question": "11. 如果投資損失，應該怎麼做？",
+                "options": ["A. 無需關心", "B. 立即停止所有投資", "C. 隨便選擇新的投資", "D. 分析原因並調整策略"],
+                "correct": 3,
+                "explanation": "在面對投資損失時，應該分析原因並調整策略，以避免重蹈覆轍。"
+            },
+            {
+                "question": "12. 購買保險的主要目的是什么？",
+                "options": ["A. 風險管理和保障", "B. 只考慮成本", "C. 無需購買", "D. 僅針對高收入者"],
+                "correct": 0,
+                "explanation": "保險的主要目的是管理風險，為突發事件提供財務保障。"
+            },
+            {
+                "question": "13. 什麼是應急基金？",
+                "options": ["A. 只限於短期投資", "B. 為突發情況準備的資金", "C. 無需儲蓄", "D. 僅針對特定人群"],
+                "correct": 1,
+                "explanation": "應急基金是為了應對突發的生活或健康問題而提前準備的資金。"
+            },
+            {
+                "question": "14. 什麼是加密貨幣？",
+                "options": ["A. 一種數字貨幣，利用加密技術", "B. 只是一種股票", "C. 僅限於特定國家使用", "D. 無需關心"],
+                "correct": 0,
+                "explanation": "加密貨幣是利用加密技術保障交易安全的數字貨幣。"
+            },
+            {
+                "question": "15. 定期儲蓄的主要優勢是什麼？",
+                "options": ["A. 僅限於高額儲蓄", "B. 只關心消費", "C. 積累資金並獲得利息", "D. 無需考慮"],
+                "correct": 2,
+                "explanation": "定期儲蓄有助於積累資金並獲得利息，從而實現財務增長。"
+            },
+            {
+                "question": "16. 購買股票時，最重要的因素是什麼？",
+                "options": ["A. 無需關心", "B. 僅依賴市場情緒", "C. 只考慮短期價格", "D. 公司的基本面分析"],
+                "correct": 3,
+                "explanation": "在購買股票時，最重要的是對公司的基本面進行分析，了解其業務狀況。"
+            },
+            {
+                "question": "17. 在購買投資產品時，應該考慮什麼？",
+                "options": ["A. 只看回報", "B. 費用、回報和風險", "C. 僅根據朋友的建議", "D. 無需調查"],
+                "correct": 1,
+                "explanation": "選擇投資產品時，應該全面考慮費用、回報和風險。"
+            },
+            {
+                "question": "18. 為什麼要了解投資市場的趨勢？",
+                "options": ["A. 有助於做出明智的投資決策", "B. 只關心短期收益", "C. 僅限於特定資產", "D. 無需關心"],
+                "correct": 0,
+                "explanation": "了解市場趨勢有助於投資者做出更明智的投資決策。"
+            },
+            {
+                "question": "19. 什麼是個人資產負債表？",
+                "options": ["A. 只有特定人群使用", "B. 僅限於收入報告", "C. 無需制定", "D. 顯示個人資產和負債的報告"],
+                "correct": 3,
+                "explanation": "個人資產負債表是一個財務報告，顯示個人擁有的資產和負債。"
+            },
+            {
+                "question": "20. 學習金融知識的好處是什麼？",
+                "options": ["A. 幫助做出更好的財務決策", "B. 僅限於高收入者", "C. 只關心消費", "D. 無需學習"],
+                "correct": 0,
+                "explanation": "學習金融知識可以幫助每個人做出更明智的財務決策，增強財務管理能力。"
+            }, {
+                "question": "21. 如何防範網路詐騙？",
+                "options": ["A. 只信任朋友的建議", "B. 不隨便點擊不明鏈接", "C. 隨便分享個人信息", "D. 無需關心"],
+                "correct": 1,
+                "explanation": "防範網路詐騙的關鍵是避免點擊不明鏈接，並保護個人資訊安全。"
+            },
+            {
+                "question": "22. 遇到可疑的投資信息時，應該怎麼做？",
+                "options": ["A. 進行詳細調查", "B. 隨便投資", "C. 只依賴直覺", "D. 無需關心"],
+                "correct": 0,
+                "explanation": "遇到可疑的投資信息應該進行詳細的調查，確保其可靠性。"
+            },
+            {
+                "question": "23. 什麼是投資詐騙的常見特徵？",
+                "options": ["A. 僅限於合法投資", "B. 只依賴口碑", "C. 高回報、低風險的承諾", "D. 無需考慮"],
+                "correct": 2,
+                "explanation": "投資詐騙通常會承諾高回報、低風險，這是一個警示信號。"
+            },
+            {
+                "question": "24. 在投資前應該做什麼？",
+                "options": ["A. 僅依賴朋友的建議", "B. 進行詳細的市場調查", "C. 只考慮短期收益", "D. 無需考慮"],
+                "correct": 1,
+                "explanation": "投資前應該進行詳細的市場調查，了解風險並選擇合適的投資產品。"
+            },
+            {
+                "question": "25. 什麼是詐騙者常用的策略？",
+                "options": ["A. 利用緊迫感和恐懼", "B. 只依賴真實信息", "C. 僅針對特定人群", "D. 無需使用策略"],
+                "correct": 0,
+                "explanation": "詐騙者常常利用緊迫感和恐懼來促使受害者做出錯誤決策。"
+            },
+            {
+                "question": "26. 如果收到可疑的電話，應該怎麼做？",
+                "options": ["A. 隨便回答問題", "B. 立即提供信息", "C. 不提供任何信息，掛斷電話", "D. 無需擔心"],
+                "correct": 2,
+                "explanation": "如果收到可疑電話，應該避免提供任何信息，並立即掛斷。"
+            },
+            {
+                "question": "27. 什麼是社交工程？",
+                "options": ["A. 無需考慮", "B. 只限於商業工程", "C. 僅針對特定年齡層", "D. 詐騙者利用社交技巧獲取信息"],
+                "correct": 3,
+                "explanation": "社交工程指的是詐騙者利用社交技巧來操控和獲取敏感信息。"
+            },
+            {
+                "question": "28. 如何判斷一個投資機會是否可靠？",
+                "options": ["A. 只依賴朋友的建議", "B. 通過詳細的背景調查", "C. 僅看表面現象", "D. 無需考慮"],
+                "correct": 1,
+                "explanation": "評估投資機會是否可靠需要通過詳細的背景調查來了解其真實性。"
+            },
+            {
+                "question": "29. 在選擇投資平台時，應該注意什麼？",
+                "options": ["A. 平台的合法性和用戶評價", "B. 只關心收益", "C. 僅依賴口碑", "D. 無需檢查"],
+                "correct": 0,
+                "explanation": "選擇投資平台時應該考慮平台的合法性以及用戶評價。"
+            },
+            {
+                "question": "30. 如果懷疑自己遇到詐騙，應該怎麼做？",
+                "options": ["A. 僅依賴朋友的意見", "B. 隨便放棄", "C. 不需要報告", "D. 立即向相關機構報告"],
+                "correct": 3,
+                "explanation": "如果懷疑自己遇到詐騙，應該立即向相關機構報告，以便防止更多人受害。"
             }
         ];
 
@@ -98,29 +217,29 @@
             if (!questionData) {
                 const accuracy = calculateAccuracy();
                 document.getElementById('question-container').innerHTML = `
-                    測驗完成！正確率：${accuracy}%<br>
-                    <button onclick="submitFeedback()">提交回饋</button>
-                `;
+                        測驗完成！正確率：${accuracy}%<br>
+                        <button onclick="submitFeedback()">提交回饋</button>
+                    `;
                 return;
             }
 
             const container = document.getElementById('question-container');
             container.innerHTML = `
-                <p>${questionData.question}</p>
-                ${questionData.options.map((option, index) => `
-                    <button onclick="checkAnswer(${index})">${option}</button>
-                `).join('')}
-                <div id="feedback-container" style="display: none;">
-                    <p>解析：${questionData.explanation}</p>
-                    <label>此解析的有用程度（1-3分）：</label>
-                    <select id="feedback-score">
-                        <option value="1">1 - 不太有用</option>
-                        <option value="2">2 - 普通</option>
-                        <option value="3">3 - 很有用</option>
-                    </select>
-                    <button onclick="submitSingleFeedback()">下一題</button>
-                </div>
-            `;
+                    <p>${questionData.question}</p>
+                    ${questionData.options.map((option, index) => `
+                        <button onclick="checkAnswer(${index})">${option}</button>
+                    `).join('')}
+                    <div id="feedback-container" style="display: none;">
+                        <p>解析：${questionData.explanation}</p>
+                        <label>此解析的有用程度（1-3分）：</label>
+                        <select id="feedback-score">
+                            <option value="1">1 - 不太有用</option>
+                            <option value="2">2 - 普通</option>
+                            <option value="3">3 - 很有用</option>
+                        </select>
+                        <button onclick="submitSingleFeedback()">下一題</button>
+                    </div>
+                `;
         }
 
         function checkAnswer(selected) {
