@@ -355,7 +355,7 @@
         }
 
         function submitFeedback() {
-            const levelRef = db.ref('quizStats/level1'); // Firebase存儲節點
+            const levelRef = db.ref('quizStats/level3'); // Firebase存儲節點
             levelRef.once('value').then((snapshot) => {
                 const stats = snapshot.val() || { participants: 0, correctCount: 0, scoreCount1: 0, scoreCount2: 0, scoreCount3: 0 };
 
