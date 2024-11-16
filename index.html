@@ -6,6 +6,73 @@
     <title>投資理財測驗結果</title>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* 使內容水平居中 */
+            justify-content: flex-start; /* 使內容從上方開始排列 */
+            height: 100vh; /* 使頁面高度填滿視窗 */
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #2c3e50;
+        }
+
+        #question-container {
+            max-width: 600px;
+            width: 100%;
+            margin: 20px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        button.selected {
+            background-color: #f39c12;
+        }
+
+        button.correct {
+            background-color: #2ecc71;
+        }
+
+        button.incorrect {
+            background-color: #e74c3c;
+        }
+
+        #feedback-container {
+            margin-top: 20px;
+            background: #f9f9f9;
+            padding: 10px;
+            border-radius: 8px;
+        }
+    </style>
     <script>
         // Firebase 初始化
         const firebaseConfig = {
@@ -80,32 +147,39 @@
     <h1>投資理財測驗結果</h1>
 
     <h2>選擇測驗級別</h2>
-    <button onclick="window.location.href='quiz_level_1.html'">小白級 (Level 1)</button>
-    <button onclick="window.location.href='quiz_level_2.html'">進階級 (Level 2)</button>
-    <button onclick="window.location.href='quiz_level_3.html'">專家級 (Level 3)</button>
+    <div id="button-container">
+        <button onclick="window.location.href='quiz_level_1.html'">小白級 (Level 1)</button>
+        <button onclick="window.location.href='quiz_level_2.html'">進階級 (Level 2)</button>
+        <button onclick="window.location.href='quiz_level_3.html'">專家級 (Level 3)</button>
+    </div>
 
     <h2>總參與人數: <span id="total-participants">0</span></h2>
 
-    <h2>小白級 (Level 1)</h2>
-    <p>參與人數: <span id="level1-participants">0</span></p>
-    <p>正確回答數: <span id="level1-correct">0</span></p>
-    <p>解析有用程度 1 分數: <span id="level1-scoreCount1">0%</span></p>
-    <p>解析有用程度 2 分數: <span id="level1-scoreCount2">0%</span></p>
-    <p>解析有用程度 3 分數: <span id="level1-scoreCount3">0%</span></p>
+    <div id="question-container">
+        <h2>小白級 (Level 1)</h2>
+        <p>參與人數: <span id="level1-participants">0</span></p>
+        <p>正確回答數: <span id="level1-correct">0</span></p>
+        <p>解析有用程度 1 分數: <span id="level1-scoreCount1">0%</span></p>
+        <p>解析有用程度 2 分數: <span id="level1-scoreCount2">0%</span></p>
+        <p>解析有用程度 3 分數: <span id="level1-scoreCount3">0%</span></p>
+    </div>
 
-    <h2>進階級 (Level 2)</h2>
-    <p>參與人數: <span id="level2-participants">0</span></p>
-    <p>正確回答數: <span id="level2-correct">0</span></p>
-    <p>解析有用程度 1 分數: <span id="level2-scoreCount1">0%</span></p>
-    <p>解析有用程度 2 分數: <span id="level2-scoreCount2">0%</span></p>
-    <p>解析有用程度 3 分數: <span id="level2-scoreCount3">0%</span></p>
+    <div id="question-container">
+        <h2>進階級 (Level 2)</h2>
+        <p>參與人數: <span id="level2-participants">0</span></p>
+        <p>正確回答數: <span id="level2-correct">0</span></p>
+        <p>解析有用程度 1 分數: <span id="level2-scoreCount1">0%</span></p>
+        <p>解析有用程度 2 分數: <span id="level2-scoreCount2">0%</span></p>
+        <p>解析有用程度 3 分數: <span id="level2-scoreCount3">0%</span></p>
+    </div>
 
-    <h2>專家級 (Level 3)</h2>
-    <p>參與人數: <span id="level3-participants">0</span></p>
-    <p>正確回答數: <span id="level3-correct">0</span></p>
-    <p>解析有用程度 1 分數: <span id="level3-scoreCount1">0%</span></p>
-    <p>解析有用程度 2 分數: <span id="level3-scoreCount2">0%</span></p>
-    <p>解析有用程度 3 分數: <span id="level3-scoreCount3">0%</span></p>
-
+    <div id="question-container">
+        <h2>專家級 (Level 3)</h2>
+        <p>參與人數: <span id="level3-participants">0</span></p>
+        <p>正確回答數: <span id="level3-correct">0</span></p>
+        <p>解析有用程度 1 分數: <span id="level3-scoreCount1">0%</span></p>
+        <p>解析有用程度 2 分數: <span id="level3-scoreCount2">0%</span></p>
+        <p>解析有用程度 3 分數: <span id="level3-scoreCount3">0%</span></p>
+    </div>
 </body>
 </html>
