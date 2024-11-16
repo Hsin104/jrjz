@@ -270,30 +270,25 @@
             }
         ];
         // 隨機選擇15題
-        function getRandomQuestions(questionArray, count) {
+	function getRandomQuestions(questionArray, count) {
             const shuffled = questionArray.sort(() => 0.5 - Math.random());
             return shuffled.slice(0, count);
         }
 
         const selectedQuestions = getRandomQuestions(questions, 15);
-
         let currentQuestion = 0;
         let score = 0;
-        let userSelections = []; // 儲存用戶選擇
-        let feedback = []; // 儲存解析回饋
+        let userSelections = [];
+        let feedback = [];
+
 
         function loadQuestion() {
-            const questionData = selectedQuestions[currentQuestion];
-            
-			if (!questionData) {
-                document.getElementById("question-container").innerHTML = `
-                    <p>測驗完成！</p>
-                    <p>正確率：${Math.round((score / selectedQuestions.length) * 100)}%</p>
-                    <button onclick="submitFeedback()">提交回饋</button>
-                `;
+            if (currentQuestion >= selectedQuestions.length) {
+                showResults();
                 return;
             }
 
+            const questionData = selectedQuestions[currentQuestion];
             const container = document.getElementById("question-container");
             container.innerHTML = `
                 <p>${currentQuestion + 1}. ${questionData.question}</p>
@@ -306,47 +301,39 @@
         function handleSelection(index) {
             const questionData = selectedQuestions[currentQuestion];
             userSelections[currentQuestion] = index;
+            const isCorrect = index === questionData.correct;
 
-            // 更新按鈕樣式
-            document.querySelectorAll("button").forEach(button => {
-                button.classList.remove("selected");
-            });
-            document.getElementById(`option-${index}`).classList.add("selected");
+            // 記錄分數
+            if (isCorrect) score++;
 
-            // 顯示解析和回饋區塊
-            showFeedback(index === questionData.correct, questionData.explanation);
+            showFeedback(isCorrect, questionData.explanation);
         }
 
         function showFeedback(isCorrect, explanation) {
-            const container = document.getElementById("question-container");
             const questionData = selectedQuestions[currentQuestion];
-
-            // 標記正確或錯誤答案
             document.querySelectorAll("button").forEach((button, index) => {
-                if (index === questionData.correct) {
-                    button.classList.add("correct");
-                } else if (userSelections[currentQuestion] === index) {
-                    button.classList.add("incorrect");
-                }
-                button.disabled = true; // 禁用按鈕防止重複點擊
+                button.disabled = true;
+                if (index === questionData.correct) button.classList.add("correct");
+                else if (index === userSelections[currentQuestion]) button.classList.add("incorrect");
             });
 
+            const container = document.getElementById("question-container");
             container.innerHTML += `
                 <div id="feedback-container">
-        <p>${isCorrect ? "正確！" : "錯誤！"} ${explanation}</p>
-        <label>此解析的有用程度（1-3分）：</label>
-        <select id="feedback-score">
-            <option value="1">1 - 不太有用</option>
-            <option value="2">2 - 普通</option>
-            <option value="3" selected>3 - 很有用</option>
-        </select>
-        <button onclick="submitSingleFeedback()">下一題</button>
-</div>
+                    <p>${isCorrect ? "正確！" : "錯誤！"} ${explanation}</p>
+                    <label>此解析的有用程度（1-3分）：</label>
+                    <select id="feedback-score">
+                        <option value="1">1 - 不太有用</option>
+                        <option value="2">2 - 普通</option>
+                        <option value="3" selected>3 - 很有用</option>
+                    </select>
+                    <button onclick="submitSingleFeedback()">下一題</button>
+                </div>
             `;
         }
 
         function submitSingleFeedback() {
-            const feedbackScore = document.getElementById('feedback-score').value;
+            const feedbackScore = document.getElementById("feedback-score").value;
             feedback.push({
                 question: selectedQuestions[currentQuestion].question,
                 score: parseInt(feedbackScore)
@@ -355,35 +342,46 @@
             loadQuestion();
         }
 
-        function submitFeedback() {
-            const levelRef = db.ref('quizStats/level3'); // Firebase存儲節點
-            levelRef.once('value').then((snapshot) => {
-                const stats = snapshot.val() || { participants: 0, correctCount: 0, scoreCount1: 0, scoreCount2: 0, scoreCount3: 0 };
+        function showResults() {
+            const container = document.getElementById("question-container");
+            container.innerHTML = `
+                <p>測驗完成！</p>
+                <p>正確率：${Math.round((score / selectedQuestions.length) * 100)}%</p>
+                <button onclick="submitFeedback()">提交回饋</button>
+            `;
+        }
 
-                // 更新參與人數和正確回答數
+        function submitFeedback() {
+            const levelRef = db.ref('quizStats/level3');
+            levelRef.once('value').then(snapshot => {
+                const stats = snapshot.val() || {
+                    participants: 0,
+                    correctCount: 0,
+                    scoreCount1: 0,
+                    scoreCount2: 0,
+                    scoreCount3: 0
+                };
+
                 stats.participants += 1;
                 stats.correctCount += score;
 
-                // 計算各分數統計數量
-                const scoreCount1 = feedback.filter(item => item.score === 1).length;
-                const scoreCount2 = feedback.filter(item => item.score === 2).length;
-                const scoreCount3 = feedback.filter(item => item.score === 3).length;
+                feedback.forEach(item => {
+                    if (item.score === 1) stats.scoreCount1++;
+                    else if (item.score === 2) stats.scoreCount2++;
+                    else if (item.score === 3) stats.scoreCount3++;
+                });
 
-                // 更新各分數統計
-                stats.scoreCount1 += scoreCount1;
-                stats.scoreCount2 += scoreCount2;
-                stats.scoreCount3 += scoreCount3;
-
-                // 更新數據到 Firebase
-                return levelRef.set(stats);
-            }).then(() => {
-                alert("感謝您的參與！測驗結果已提交。");
-                window.location.href = "index.html"; // 跳轉到主頁
+                levelRef.set(stats).then(() => {
+                    document.getElementById("question-container").innerHTML = `
+                        <p>感謝參與！回饋已提交。</p>
+                    `;
+                }).catch(error => {
+                    alert("提交失敗，請重試！");
+                });
             });
         }
 
         loadQuestion();
-
     </script>
 </body>
 </html>
