@@ -11,51 +11,23 @@
             font-family: Arial, sans-serif;
             line-height: 1.6;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             background-color: #f4f4f9;
             color: #333;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            min-height: 100vh;
+            align-items: center; /* 使內容水平居中 */
+            justify-content: flex-start; /* 使內容從上方開始排列 */
+            height: 100vh; /* 使頁面高度填滿視窗 */
         }
 
         h1 {
             text-align: center;
-            margin-bottom: 20px;
+            margin-top: 20px;
             color: #2c3e50;
         }
 
-        h2 {
-            color: #34495e;
-            margin-top: 20px;
-        }
-
-        #button-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 30px;
-        }
-
-        #button-container button {
-            width: 200px;
-            padding: 10px;
-            font-size: 16px;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        #button-container button:hover {
-            background-color: #2980b9;
-        }
-
-        .stats-container {
+        #question-container {
             max-width: 600px;
             width: 100%;
             margin: 20px 0;
@@ -65,23 +37,40 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .stats-container p {
+        button {
+            display: block;
+            width: 100%;
             margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
         }
 
-        .stats-container span {
-            font-weight: bold;
+        button:hover {
+            background-color: #2980b9;
         }
 
-        .error-message {
-            color: red;
-            font-weight: bold;
+        button.selected {
+            background-color: #f39c12;
         }
 
-        @media (max-width: 600px) {
-            #button-container button {
-                width: 100%;
-            }
+        button.correct {
+            background-color: #2ecc71;
+        }
+
+        button.incorrect {
+            background-color: #e74c3c;
+        }
+
+        #feedback-container {
+            margin-top: 20px;
+            background: #f9f9f9;
+            padding: 10px;
+            border-radius: 8px;
         }
     </style>
     <script>
@@ -110,11 +99,6 @@
                     scoreCount3: 0
                 };
 
-                // 計算正確率
-                const correctRate = stats.participants > 0 
-                    ? ((stats.correctCount / stats.participants) * 100).toFixed(2) 
-                    : "尚無數據";
-
                 // 計算解析有用程度百分比
                 const totalFeedback = stats.scoreCount1 + stats.scoreCount2 + stats.scoreCount3;
                 const percentage1 = totalFeedback > 0 ? ((stats.scoreCount1 / totalFeedback) * 100).toFixed(2) : 0;
@@ -123,7 +107,7 @@
 
                 // 顯示統計資料
                 document.getElementById(`${level}-participants`).innerText = stats.participants;
-                document.getElementById(`${level}-correct`).innerText = `${stats.correctCount} (${correctRate}%)`;
+                document.getElementById(`${level}-correct`).innerText = stats.correctCount;
                 document.getElementById(`${level}-scoreCount1`).innerText = `${percentage1}%`;
                 document.getElementById(`${level}-scoreCount2`).innerText = `${percentage2}%`;
                 document.getElementById(`${level}-scoreCount3`).innerText = `${percentage3}%`;
@@ -131,15 +115,9 @@
                 return stats.participants;
             }).catch((error) => {
                 console.error(`無法載入 ${level} 的統計數據: `, error);
-                document.getElementById(`${level}-participants`).innerText = "載入失敗";
-                document.getElementById(`${level}-correct`).innerText = "載入失敗";
-                document.getElementById(`${level}-scoreCount1`).innerText = "載入失敗";
-                document.getElementById(`${level}-scoreCount2`).innerText = "載入失敗";
-                document.getElementById(`${level}-scoreCount3`).innerText = "載入失敗";
                 return 0;
             });
         }
-
 
         // 計算並顯示總參與人數
         function loadTotalParticipants() {
@@ -177,28 +155,28 @@
 
     <h2>總參與人數: <span id="total-participants">0</span></h2>
 
-    <div class="stats-container">
+    <div id="question-container">
         <h2>小白級 (Level 1)</h2>
         <p>參與人數: <span id="level1-participants">0</span></p>
-        <p style="display:none;">正確回答數: <span id="level1-correct">0</span></p>
+        <p>正確回答數: <span id="level1-correct">0</span></p>
         <p>解析有用程度 1 分數: <span id="level1-scoreCount1">0%</span></p>
         <p>解析有用程度 2 分數: <span id="level1-scoreCount2">0%</span></p>
         <p>解析有用程度 3 分數: <span id="level1-scoreCount3">0%</span></p>
     </div>
 
-    <div class="stats-container">
+    <div id="question-container">
         <h2>進階級 (Level 2)</h2>
         <p>參與人數: <span id="level2-participants">0</span></p>
-        <p style="display:none;">正確回答數: <span id="level2-correct">0</span></p>
+        <p>正確回答數: <span id="level2-correct">0</span></p>
         <p>解析有用程度 1 分數: <span id="level2-scoreCount1">0%</span></p>
         <p>解析有用程度 2 分數: <span id="level2-scoreCount2">0%</span></p>
         <p>解析有用程度 3 分數: <span id="level2-scoreCount3">0%</span></p>
     </div>
 
-    <div class="stats-container">
+    <div id="question-container">
         <h2>專家級 (Level 3)</h2>
         <p>參與人數: <span id="level3-participants">0</span></p>
-        <p style="display:none;">正確回答數: <span id="level3-correct">0</span></p>
+        <p>正確回答數: <span id="level3-correct">0</span></p>
         <p>解析有用程度 1 分數: <span id="level3-scoreCount1">0%</span></p>
         <p>解析有用程度 2 分數: <span id="level3-scoreCount2">0%</span></p>
         <p>解析有用程度 3 分數: <span id="level3-scoreCount3">0%</span></p>
