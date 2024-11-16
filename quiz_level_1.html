@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>投資理財測驗 - 小白級 (Level 1)</</title>
+    <title>萌新 (Level 1)</title>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <script>
@@ -58,21 +58,21 @@
             cursor: pointer;
         }
 
-            button:hover {
-                background-color: #2980b9;
-            }
+        button:hover {
+            background-color: #2980b9;
+        }
 
-            button.selected {
-                background-color: #f39c12;
-            }
+        button.selected {
+            background-color: #f39c12;
+        }
 
-            button.correct {
-                background-color: #2ecc71;
-            }
+        button.correct {
+            background-color: #2ecc71;
+        }
 
-            button.incorrect {
-                background-color: #e74c3c;
-            }
+        button.incorrect {
+            background-color: #e74c3c;
+        }
 
         #feedback-container {
             margin-top: 20px;
@@ -83,7 +83,7 @@
     </style>
 </head>
 <body>
-    <h1>投資理財測驗 - 小白級 (Level 1)</h1>
+    <h1>測驗等級 - 萌新 (Level 1)</h1>
     <div id="question-container"></div>
 
     <script>
@@ -92,208 +92,202 @@
                 "question": "投資的主要目的是什麼？",
                 "options": ["A. 增加資產", "B. 增加負債", "C. 增加消費", "D. 增加工作時間"],
                 "correct": 0,
-                "explanation": "投資的目的是通過資本增值來增加資產。"
+                "explanation": "投資的主要目的是讓你的錢「生錢」，也就是通過資本增值來增加你的資產！讓你的財富像滾雪球一樣越滾越大～"
             },
             {//2
                 "question": "什麼是股票？",
                 "options": ["A. 一種債務工具", "B. 公司發行的所有權憑證", "C. 一種現金等價物", "D. 一種商品"],
                 "correct": 1,
-                "explanation": "股票是公司向投資者發行的所有權證明，代表股東對公司的一部分擁有權。"
+                "explanation": "股票就像是你擁有了一家公司的一小部分，代表你對這家公司有「所有權」，每當公司賺錢，你也能分一杯羹！"
             },
             {//3
                 "question": "定期存款的特點是什麼？",
                 "options": ["A. 隨時可以提取", "B. 固定利率和固定存期", "C. 無需支付利息", "D. 只針對大額存款"],
                 "correct": 1,
-                "explanation": "定期存款通常具有固定利率和存期，以此來提供穩定的收益。"
+                "explanation": "定期存款就像是把錢藏在「保險箱」裡，存期和利率都固定，保證你一定能得到穩定的回報，簡直是讓你睡得安心的好選擇！"
             },
             {//4
                 "question": "在選擇投資時，應考慮什麼？",
                 "options": ["A. 隨意選擇", "B. 朋友的意見", "C. 自己的風險承受能力", "D. 只看短期回報"],
                 "correct": 2,
-                "explanation": "在投資時，了解自身的風險承受能力是關鍵的考量因素。"
+                "explanation": "選擇投資可不能憑衝動！你得先了解自己的風險承受能力，就像選擇適合自己強度的運動，這樣才能玩得開心又安全。"
             },
             {//5
                 "question": "什麼是債券？",
                 "options": ["A. 一種商品", "B. 一種股權證明", "C. 一種借貸契約", "D. 一種貨幣"],
                 "correct": 2,
-                "explanation": "債券是一種借貸契約，投資者向發行者提供資金，並在一定期間獲得利息回報。"
+                "explanation": "債券就像是你借錢給政府或公司，他們承諾一定會在一段時間後還錢給你，還會額外給你利息，聽起來是不是很不錯？"
             },
             {//6
                 "question": "投資多樣化的主要目的是什麼？",
                 "options": ["A. 簡化投資", "B. 增加負債", "C. 專注於單一投資", "D. 降低風險"],
                 "correct": 3,
-                "explanation": "投資多樣化的主要目的是通過分散風險來保護投資者的資本。"
+                "explanation": "投資多樣化就像打保險，幫你分散風險，讓你避免把所有雞蛋放在同一個籃子裡，這樣萬一有什麼損失，也不會慘到全盤皆輸。"
             },
             {//7
                 "question": "長期投資的特點是什麼？",
                 "options": ["A. 風險較高", "B. 只能在一年內進行", "C. 隨時間增長的潛在回報", "D. 僅限於股票"],
                 "correct": 2,
-                "explanation": "長期投資能夠隨著時間的推移增加回報，適合有耐心的投資者。"
+                "explanation": "長期投資像是一場耐力賽，雖然風險比較大，但只要耐心等上幾年，回報會像時間的朋友一樣，越久越可觀！"
             },
             {//8
                 "question": "什麼是股息？",
                 "options": ["A. 投資的風險", "B. 公司分配給股東的利潤", "C. 負債的利息", "D. 購買股票的成本"],
                 "correct": 1,
-                "explanation": "股息是公司獲利後分配給股東的部分，代表股東的投資回報。"
+                "explanation": "股息就像是你在一家公司的「分紅」，當公司賺錢時，他會把一部分利潤分給股東，這可是你的「回報」哦。"
             },
             {//9
                 "question": "什麼是流動資產？",
                 "options": ["A. 可以迅速轉換為現金的資產", "B. 只能長期持有的資產", "C. 只有固定資產", "D. 無需考慮的資產"],
                 "correct": 0,
-                "explanation": "流動資產指能迅速轉換為現金的資產，如存貨或現金。"
+                "explanation": "流動資產就是那些隨時可以轉換為現金的資產，像現金或存款，這樣你遇到急需的時候，能馬上拿來用，簡直是財務上的「救急包」！"
             },
             {//10
                 "question": "投資的風險指的是什麼？",
                 "options": ["A. 市場的潛在機會", "B. 獲得高回報的可能性", "C. 投資的法律風險", "D. 損失資金的可能性"],
                 "correct": 3,
-                "explanation": "投資風險通常是指可能損失資金的機會，隨著回報潛力增加而增加。"
+                "explanation": "投資的風險就是損失資金的可能性，但同時它也帶來了賺大錢的機會。想要賺錢，就得面對風險，這就是投資的「遊戲規則」！"
             },
             {//11
                 "question": "在制定預算時，最重要的是什麼？",
                 "options": ["A. 只關注收入", "B. 只關注支出", "C. 收入和支出的平衡", "D. 隨意花費"],
                 "correct": 2,
-                "explanation": "有效的預算應該平衡收入與支出，避免過度消費。"
+                "explanation": "預算就像是你的財務地圖，讓你能清楚知道收入和支出如何平衡，避免迷失在消費的迷宮裡。"
             },
             {//12
                 "question": "什麼是退休金？",
                 "options": ["A. 一種短期投資", "B. 政府的福利", "C. 為退休生活儲蓄的資金", "D. 僅針對公司職員"],
                 "correct": 2,
-                "explanation": "退休金是為了支持退休後的生活而設立的長期儲蓄。"
+                "explanation": "退休金是為了確保你未來的生活不會因為年老而陷入困境，是一筆為你的黃金歲月量身定做的儲蓄。"
             },
             {//13
                 "question": "信用卡的主要特點是什麼？",
                 "options": ["A. 允許持卡人透支消費", "B. 只能用現金支付", "C. 只有特定商家使用", "D. 無需還款"],
                 "correct": 0,
-                "explanation": "信用卡提供持卡人透支消費的能力，但需按時還款。"
+                "explanation": "信用卡就像是你的財務小夥伴，給你提前使用現金的權利，但記得，使用後可要按時還款，不然就會變成「財務麻煩製造機」！"
             },
             {//14
                 "question": "什麼是財務自由？",
                 "options": ["A. 只關注短期財務", "B. 不必依賴工作而生活", "C. 只考慮當前收入", "D. 無需制定財務計劃"],
                 "correct": 1,
-                "explanation": "財務自由是指擁有足夠的資產來支撐生活，不依賴工作收入。"
+                "explanation": "財務自由讓你擁有足夠的資產來維持生活，這樣你就能自由選擇是否繼續工作，簡直像是從財務束縛中獲得解放！"
             },
             {//15
                 "question": "什麼是投資回報率（ROI）？",
                 "options": ["A. 僅限於股市", "B. 只關心資本利得", "C. 只計算固定收益", "D. 投資獲得的利潤與投資成本的比例"],
                 "correct": 3,
-                "explanation": "投資回報率衡量了投資的利潤相對於投入成本的比率。"
+                "explanation": "投資回報率就是你投資後，獲得的利潤和投入資金的比率，這就像是你栽種的「理財果樹」，要看它長得多高，才能決定你的收穫！"
             },
             {//16
                 "question": "負債的主要風險是什麼？",
                 "options": ["A. 可能導致破產", "B. 只能用於投資", "C. 不需要償還", "D. 只影響信用評分"],
                 "correct": 0,
-                "explanation": "過度負債會影響財務穩定，甚至可能導致破產。"
+                "explanation": "過度負債就像是一顆隱藏的定時炸彈，可能隨時爆炸，對財務穩定構成威脅。要小心哦！"
             },
             {//17
                 "question": "為什麼要學會理財？",
                 "options": ["A. 只考慮消費", "B. 只關注收入", "C. 提高財務狀況和生活質量", "D. 無需考慮"],
                 "correct": 2,
-                "explanation": "理財有助於提升財務狀況，改善生活質量。"
+                "explanation": "學會理財就像是學會駕駛一輛車，能讓你的財務生活更加平穩、順利，開車沒有目標可是會撞牆的，理財同理，做好規劃才會順風順水！"
             },
             {//18
                 "question": "什麼是儲蓄？",
                 "options": ["A. 無需儲蓄", "B. 只考慮花費", "C. 將一部分收入保留起來以備將來使用", "D. 只針對高收入者"],
                 "correct": 2,
-                "explanation": "儲蓄是為了未來的財務需求預留資金。"
+                "explanation": "儲蓄就是把一部分收入「藏起來」，為了將來應付突發的需要，這樣即使突如其來的狀況也能安心應對。"
             },
             {//19
                 "question": "如果你有一筆意外之財，最好的做法是什麼？",
                 "options": ["A. 隨便花掉", "B. 計劃如何使用或投資", "C. 只考慮短期使用", "D. 不做任何計劃"],
                 "correct": 1,
-                "explanation": "合理利用或投資意外之財能增強財務穩定。"
+                "explanation": "收到意外之財，不要衝動花掉！先計劃一下，看看是用來儲蓄、投資還是其他更能帶來長期回報的方式，這樣才能讓意外之財發揮最大價值。"
             },
             {//20
                 "question": "在考慮購買房產時，應該首先考慮什麼？",
                 "options": ["A. 自己的財務狀況", "B. 朋友的意見", "C. 僅根據地點", "D. 只考慮貸款利率"],
                 "correct": 0,
-                "explanation": "在考慮購買房產時，應該首先評估自己的財務狀況，確保負擔得起房產的首付和貸款。"
+                "explanation": "買房可不是隨便衝動就行的事！你要先評估自己的財務狀況，確保能負擔得起房子的首付和貸款，這樣才不會讓自己陷入財務困境。"
             },
             {//21
                 "question": "遇到可疑投資時，最好的做法是什麼？",
                 "options": ["A. 進行詳細調查", "B. 隨便投資", "C. 只依賴他人的建議", "D. 無需關心"],
                 "correct": 0,
-                "explanation": "遇到可疑投資時，應該進行詳細調查，避免被詐騙。"
+                "explanation": "可疑投資就像是發現一個奇怪的信號，千萬不要急於下手！要先詳細調查，避免掉入詐騙的陷阱。"
             },
             {//22
                 "question": "什麼是詐騙者的常用手法？",
                 "options": ["A. 無需使用策略", "B. 僅提供真實資訊", "C. 只依賴口碑", "D. 誇大回報"],
                 "correct": 3,
-                "explanation": "詐騙者常用誇大回報的手法來吸引投資者上當。"
+                "explanation": "詐騙者總是愛誇大回報，讓你覺得能輕鬆賺大錢，但別忘了，世上沒什麼好事是輕輕鬆鬆就能得到的，謹慎點！"
             },
             {//23
                 "question": "如果收到來自不明來源的電子郵件，應該怎麼做？",
                 "options": ["A. 隨便點擊查看", "B. 不點擊任何鏈接，直接刪除", "C. 只根據發件人判斷", "D. 不用擔心"],
                 "correct": 1,
-                "explanation": "收到來自不明來源的電子郵件時，應該避免點擊任何鏈接並直接刪除，防止被詐騙。"
+                "explanation": "來自不明來源的郵件就像是陌生人的邀請，千萬不要輕易點擊，直接刪掉最好，保護自己的資訊安全才是最重要的！"
             },
             {//24
                 "question": "什麼是釣魚詐騙？",
                 "options": ["A. 假冒合法機構獲取個人信息", "B. 只限於網路購物詐騙", "C. 僅針對特定族群", "D. 無需關心"],
                 "correct": 0,
-                "explanation": "釣魚詐騙是指詐騙者假冒合法機構來獲取目標的個人信息。"
+                "explanation": "釣魚詐騙就像詐騙者假冒「合法機構」，來偷取你的個人資料，千萬別被迷惑，保持警覺！"
             },
             {//25
                 "question": "如果接到可疑電話，應該怎麼做？",
                 "options": ["A. 隨便回答問題", "B. 立即提供信息", "C. 不提供任何信息，直接掛斷", "D. 無需擔心"],
                 "correct": 2,
-                "explanation": "接到可疑電話時，應該保持警覺，不提供任何個人信息，並直接掛斷。"
+                "explanation": "接到可疑電話時，保持冷靜，切勿提供個人信息！最好的做法就是直接掛掉，避免麻煩。"
             },
             {//26
                 "question": "如何識別詐騙投資機會？",
                 "options": ["A. 無需調查", "B. 僅依賴直覺", "C. 只考慮朋友的意見", "D. 誇大的收益承諾和不合理的風險"],
                 "correct": 3,
-                "explanation": "詐騙投資機會通常會誇大回報並低估風險，應當謹慎識別。"
+                "explanation": "詐騙投資的特徵就是誇大收益、低估風險，簡直是「夢幻」的條件，記得要小心識別，別被誘惑！"
             },
             {//27
                 "question": "在選擇投資平台時，應該注意什麼？",
                 "options": ["A. 只關心收益", "B. 平台的合法性和用戶評價", "C. 僅依賴朋友的推薦", "D. 無需檢查"],
                 "correct": 1,
-                "explanation": "選擇投資平台時，應該關注平台的合法性以及用戶的評價，避免選擇不可靠的網站。"
+                "explanation": "選擇投資平台時，別忘了查證它的合法性和安全性，找有信譽的機構，避免掉入詐騙平台的陷阱。"
             },
             {//28
                 "question": "投資詐騙者經常使用哪些語言？",
                 "options": ["A. 令人信服且緊迫感強的語言", "B. 只用正式語言", "C. 只用簡單語言", "D. 無需特定語言"],
                 "correct": 0,
-                "explanation": "詐騙者經常使用緊迫感強的語言來迫使受害者做出快速決定。"
+                "explanation": "詐騙者經常使用令人信服且帶有強烈緊迫感的語言，迫使受害者做出快速決策，讓他們失去警覺。這樣的語言常讓人覺得「這是最後的機會」，從而加速受害者的行動。"
             },
             {//29
                 "question": "如果有人要求你提供私人信息，應該怎麼做？",
                 "options": ["A. 隨便填寫", "B. 立即提供", "C. 謹慎對待，不隨便提供", "D. 無需考慮"],
                 "correct": 2,
-                "explanation": "在要求提供私人信息時，應該謹慎對待，避免隨便提供敏感資訊。"
+                "explanation": "對於任何要求提供私人信息的請求，應該謹慎對待，不隨便提供。這些信息可能被用來做詐騙或其他不正當用途，所以要小心保護個人隱私。"
             },
             {//30
                 "question": "投資前進行什麼是必要的？",
                 "options": ["A. 不需要任何調查", "B. 只依賴朋友的建議", "C. 僅考慮短期回報", "D. 詳細的市場調查和風險評估"],
                 "correct": 3,
-                "explanation": "投資前必須進行詳細的市場調查並評估風險，以做出明智的決策。"
+                "explanation": "在做任何投資決策之前，必須進行詳細的市場調查和風險評估，這樣能確保你了解可能的回報和風險，從而做出更明智、更安全的選擇。"
             }
         ];
-        // 隨機選擇15題
+
         function getRandomQuestions(questionArray, count) {
             const shuffled = questionArray.sort(() => 0.5 - Math.random());
             return shuffled.slice(0, count);
         }
 
         const selectedQuestions = getRandomQuestions(questions, 15);
-
         let currentQuestion = 0;
         let score = 0;
-        let userSelections = []; // 儲存用戶選擇
-        let feedback = []; // 儲存解析回饋
+        let userSelections = [];
+        let feedback = [];
 
         function loadQuestion() {
-            const questionData = selectedQuestions[currentQuestion];
-            
-			if (!questionData) {
-                document.getElementById("question-container").innerHTML = `
-                    <p>測驗完成！</p>
-                    <p>正確率：${Math.round((score / selectedQuestions.length) * 100)}%</p>
-                    <button onclick="submitFeedback()">提交回饋</button>
-                `;
+            if (currentQuestion >= selectedQuestions.length) {
+                showResults();
                 return;
             }
 
+            const questionData = selectedQuestions[currentQuestion];
             const container = document.getElementById("question-container");
             container.innerHTML = `
                 <p>${currentQuestion + 1}. ${questionData.question}</p>
@@ -306,47 +300,39 @@
         function handleSelection(index) {
             const questionData = selectedQuestions[currentQuestion];
             userSelections[currentQuestion] = index;
+            const isCorrect = index === questionData.correct;
 
-            // 更新按鈕樣式
-            document.querySelectorAll("button").forEach(button => {
-                button.classList.remove("selected");
-            });
-            document.getElementById(`option-${index}`).classList.add("selected");
+            // 記錄分數
+            if (isCorrect) score++;
 
-            // 顯示解析和回饋區塊
-            showFeedback(index === questionData.correct, questionData.explanation);
+            showFeedback(isCorrect, questionData.explanation);
         }
 
         function showFeedback(isCorrect, explanation) {
-            const container = document.getElementById("question-container");
             const questionData = selectedQuestions[currentQuestion];
-
-            // 標記正確或錯誤答案
             document.querySelectorAll("button").forEach((button, index) => {
-                if (index === questionData.correct) {
-                    button.classList.add("correct");
-                } else if (userSelections[currentQuestion] === index) {
-                    button.classList.add("incorrect");
-                }
-                button.disabled = true; // 禁用按鈕防止重複點擊
+                button.disabled = true;
+                if (index === questionData.correct) button.classList.add("correct");
+                else if (index === userSelections[currentQuestion]) button.classList.add("incorrect");
             });
 
+            const container = document.getElementById("question-container");
             container.innerHTML += `
                 <div id="feedback-container">
-        <p>${isCorrect ? "正確！" : "錯誤！"} ${explanation}</p>
-        <label>此解析的有用程度（1-3分）：</label>
-        <select id="feedback-score">
-            <option value="1">1 - 不太有用</option>
-            <option value="2">2 - 普通</option>
-            <option value="3" selected>3 - 很有用</option>
-        </select>
-        <button onclick="submitSingleFeedback()">下一題</button>
-</div>
+                    <p>${isCorrect ? "正確！" : "錯誤！"}<br> ${explanation}</p>
+                    <label>此解析的有用程度（1-3分）：</label>
+                    <select id="feedback-score">
+                        <option value="1">1 - 不太有用</option>
+                        <option value="2">2 - 普通</option>
+                        <option value="3" selected>3 - 很有用</option>
+                    </select>
+                    <button onclick="submitSingleFeedback()">下一題</button>
+                </div>
             `;
         }
 
         function submitSingleFeedback() {
-            const feedbackScore = document.getElementById('feedback-score').value;
+            const feedbackScore = document.getElementById("feedback-score").value;
             feedback.push({
                 question: selectedQuestions[currentQuestion].question,
                 score: parseInt(feedbackScore)
@@ -355,35 +341,48 @@
             loadQuestion();
         }
 
-        function submitFeedback() {
-            const levelRef = db.ref('quizStats/level1'); // Firebase存儲節點
-            levelRef.once('value').then((snapshot) => {
-                const stats = snapshot.val() || { participants: 0, correctCount: 0, scoreCount1: 0, scoreCount2: 0, scoreCount3: 0 };
+        function showResults() {
+            const container = document.getElementById("question-container");
+            container.innerHTML = `
+                <p>測驗完成！</p>
+                <p>正確率：${Math.round((score / selectedQuestions.length) * 100)}%</p>
+                <button onclick="submitFeedback()">提交回饋</button>
+            `;
+        }
 
-                // 更新參與人數和正確回答數
+        function submitFeedback() {
+            const levelRef = db.ref('quizStats/level1');
+            levelRef.once('value').then(snapshot => {
+                const stats = snapshot.val() || {
+                    participants: 0,
+                    correctCount: 0,
+                    scoreCount1: 0,
+                    scoreCount2: 0,
+                    scoreCount3: 0
+                };
+
                 stats.participants += 1;
                 stats.correctCount += score;
 
-                // 計算各分數統計數量
-                const scoreCount1 = feedback.filter(item => item.score === 1).length;
-                const scoreCount2 = feedback.filter(item => item.score === 2).length;
-                const scoreCount3 = feedback.filter(item => item.score === 3).length;
+                feedback.forEach(item => {
+                    if (item.score === 1) stats.scoreCount1++;
+                    else if (item.score === 2) stats.scoreCount2++;
+                    else if (item.score === 3) stats.scoreCount3++;
+                });
 
-                // 更新各分數統計
-                stats.scoreCount1 += scoreCount1;
-                stats.scoreCount2 += scoreCount2;
-                stats.scoreCount3 += scoreCount3;
-
-                // 更新數據到 Firebase
-                return levelRef.set(stats);
-            }).then(() => {
-                alert("感謝您的參與！測驗結果已提交。");
-                window.location.href = "index.html"; // 跳轉到主頁
+                levelRef.set(stats).then(() => {
+                    document.getElementById("question-container").innerHTML = `
+                        <p>感謝參與！回饋已提交。</p>
+                    `;
+                }).catch(error => {
+                    alert("提交失敗，請重試！");
+                });
+				alert("感謝您的參與！測驗結果已提交。");
+				window.location.href = "index.html"; // 跳轉到主頁
             });
         }
 
         loadQuestion();
-
     </script>
 </body>
 </html>
