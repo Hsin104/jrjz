@@ -58,21 +58,21 @@
             cursor: pointer;
         }
 
-        button:hover {
-            background-color: #2980b9;
-        }
+            button:hover {
+                background-color: #2980b9;
+            }
 
-        button.selected {
-            background-color: #f39c12;
-        }
+            button.selected {
+                background-color: #f39c12;
+            }
 
-        button.correct {
-            background-color: #2ecc71;
-        }
+            button.correct {
+                background-color: #2ecc71;
+            }
 
-        button.incorrect {
-            background-color: #e74c3c;
-        }
+            button.incorrect {
+                background-color: #e74c3c;
+            }
 
         #feedback-container {
             margin-top: 20px;
@@ -290,11 +290,11 @@
             const questionData = selectedQuestions[currentQuestion];
             const container = document.getElementById("question-container");
             container.innerHTML = `
-                <p>${currentQuestion + 1}. ${questionData.question}</p>
-                ${questionData.options.map((option, index) => `
-                    <button onclick="handleSelection(${index})" id="option-${index}">${option}</button>
-                `).join('')}
-            `;
+                            <p>${currentQuestion + 1}. ${questionData.question}</p>
+                            ${questionData.options.map((option, index) => `
+                                <button onclick="handleSelection(${index})" id="option-${index}">${option}</button>
+                            `).join('')}
+                        `;
         }
 
         function handleSelection(index) {
@@ -318,17 +318,17 @@
 
             const container = document.getElementById("question-container");
             container.innerHTML += `
-                <div id="feedback-container">
-                    <p>${isCorrect ? "正確！" : "錯誤！"}<br> ${explanation}</p>
-                    <label>此解析的有用程度（1-3分）：</label>
-                    <select id="feedback-score">
-                        <option value="1">1 - 不太有用</option>
-                        <option value="2">2 - 普通</option>
-                        <option value="3" selected>3 - 很有用</option>
-                    </select>
-                    <button onclick="submitSingleFeedback()">下一題</button>
-                </div>
-            `;
+                            <div id="feedback-container">
+                                <p>${isCorrect ? "正確！" : "錯誤！"}<br> ${explanation}</p>
+                                <label>此解析的有用程度（1-3分）：</label>
+                                <select id="feedback-score">
+                                    <option value="1">1 - 不太有用</option>
+                                    <option value="2">2 - 普通</option>
+                                    <option value="3" selected>3 - 很有用</option>
+                                </select>
+                                <button onclick="submitSingleFeedback()">下一題</button>
+                            </div>
+                        `;
         }
 
         function submitSingleFeedback() {
@@ -342,13 +342,59 @@
         }
 
         function showResults() {
+            const correctRate = Math.round((score / selectedQuestions.length) * 100); // 計算正確率
+
+            // 為每個範圍設計多組訊息
+            const messages = {
+                100: [
+                    "哇! 你也太厲害了吧!!邁進下一關~~",
+                    "神乎其技！你是天才嗎？對你來說是不是太簡單了?",
+                    "全對！令人佩服！直接下一關~",
+                    "幹得漂亮！可以進階到菜鳥了！！"
+                ],
+                excellent: [
+                    "很棒！再努力一下就完美了！",
+                    "接近滿分！快點再挑戰一次吧！",
+                    "幾乎無懈可擊！加油！",
+                    "差一點就滿分了，真優秀！"
+                ],
+                good: [
+                    "還可以，但要小心別被簡單題目絆倒！",
+                    "多加練習，還有進步空間喔！",
+                    "不錯的開始，但別掉以輕心！",
+                    "已經有基礎了，再接再厲！"
+                ],
+                poor: [
+                    "你是認真的嗎？這樣會被騙錢喔！",
+                    "天啊！快學點基本理財知識吧！",
+                    "這樣下去你的錢包會哭的！",
+                    "別灰心，多做點功課再來挑戰！"
+                ]
+            };
+
+            let selectedMessage = "";
+
+            // 根據正確率範圍隨機挑選訊息
+            if (correctRate === 100) {
+                selectedMessage = messages[100][Math.floor(Math.random() * messages[100].length)];
+            } else if (correctRate >= 80) {
+                selectedMessage = messages.excellent[Math.floor(Math.random() * messages.excellent.length)];
+            } else if (correctRate >= 50) {
+                selectedMessage = messages.good[Math.floor(Math.random() * messages.good.length)];
+            } else {
+                selectedMessage = messages.poor[Math.floor(Math.random() * messages.poor.length)];
+            }
+
+            // 更新結果顯示
             const container = document.getElementById("question-container");
             container.innerHTML = `
-                <p>測驗完成！</p>
-                <p>正確率：${Math.round((score / selectedQuestions.length) * 100)}%</p>
-                <button onclick="submitFeedback()">提交回饋</button>
-            `;
+                    <p>測驗完成！</p>
+                    <p>正確率：${correctRate}%</p>
+                    <p>${selectedMessage}</p>
+                    <button onclick="submitFeedback()">提交回饋</button>
+                `;
         }
+
 
         function submitFeedback() {
             const levelRef = db.ref('quizStats/level1');
@@ -372,13 +418,13 @@
 
                 levelRef.set(stats).then(() => {
                     document.getElementById("question-container").innerHTML = `
-                        <p>感謝參與！回饋已提交。</p>
-                    `;
+                                    <p>感謝參與！回饋已提交。</p>
+                                `;
                 }).catch(error => {
                     alert("提交失敗，請重試！");
                 });
-				alert("感謝您的參與！測驗結果已提交。");
-				window.location.href = "index.html"; // 跳轉到主頁
+                alert("感謝您的參與！測驗結果已提交。");
+                window.location.href = "index.html"; // 跳轉到主頁
             });
         }
 

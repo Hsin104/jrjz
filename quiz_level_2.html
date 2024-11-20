@@ -340,14 +340,59 @@
             currentQuestion++;
             loadQuestion();
         }
-
+       
         function showResults() {
+            const correctRate = Math.round((score / selectedQuestions.length) * 100); // 計算正確率
+
+            // 為每個範圍設計多組訊息
+            const messages = {
+                100: [
+                    "哇! 你也太厲害了吧!! 要不要提高難度呀~",
+                    "神乎其技！你是天才嗎？該去下一關了吧?!",
+                    "全對！令人佩服！你是不是選錯關了?",
+                    "完美表現！這水準太高了！你怎麼會出現在這?"
+                ],
+                excellent: [
+                    "很棒！再努力一下就完美了！",
+                    "接近滿分！快點再挑戰一次吧！",
+                    "幾乎無懈可擊！加油！",
+                    "差一點就滿分了，真優秀！"
+                ],
+                good: [
+                    "還可以，但要小心別被簡單題目絆倒！",
+                    "多加練習，還有進步空間喔！",
+                    "不錯的開始，但別掉以輕心！",
+                    "已經有基礎了，再接再厲！"
+                ],
+                poor: [
+                    "你是認真的嗎？這樣會被騙錢喔！",
+                    "天啊！快學點基本理財知識吧！",
+                    "這樣下去你的錢包會哭的！",
+                    "別灰心，多做點功課再來挑戰！"
+                ]
+            };
+
+            let selectedMessage = "";
+
+            // 根據正確率範圍隨機挑選訊息
+            if (correctRate === 100) {
+                selectedMessage = messages[100][Math.floor(Math.random() * messages[100].length)];
+            } else if (correctRate >= 80) {
+                selectedMessage = messages.excellent[Math.floor(Math.random() * messages.excellent.length)];
+            } else if (correctRate >= 50) {
+                selectedMessage = messages.good[Math.floor(Math.random() * messages.good.length)];
+            } else {
+                selectedMessage = messages.poor[Math.floor(Math.random() * messages.poor.length)];
+            }
+
+            // 更新結果顯示
             const container = document.getElementById("question-container");
             container.innerHTML = `
-                <p>測驗完成！</p>
-                <p>正確率：${Math.round((score / selectedQuestions.length) * 100)}%</p>
-                <button onclick="submitFeedback()">提交回饋</button>
-            `;
+                    <p>測驗完成！</p>
+                    <p>正確率：${correctRate}%</p>
+                    <p>${selectedMessage}</p>
+                    <button onclick="submitFeedback()">提交回饋</button>
+                `;
         }
 
         function submitFeedback() {
