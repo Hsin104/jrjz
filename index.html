@@ -107,29 +107,27 @@
             });
         }
 
-        // 載入按鈕點擊統計數據
-        function loadAgeSelectionStats() {
-            const statsRef = db.ref('ageSelectionStats');
-            statsRef.on('value', (snapshot) => {
-                const stats = snapshot.val() || {};
-                const under25 = stats.under25 || 0;
-                const age25to30 = stats['25to30'] || 0;
-                const above30 = stats.above30 || 0;
+        // 載入測驗級別選擇統計數據
+function loadTotalParticipants() {
+    const statsRef = db.ref('levelSelectionStats');
+    statsRef.on('value', (snapshot) => {
+        const stats = snapshot.val() || {};
+        const level1 = stats[1] || 0;
+        const level2 = stats[2] || 0;
+        const level3 = stats[3] || 0;
 
-                // 更新頁面顯示
-                document.getElementById('under25-count').innerText = under25;
-                document.getElementById('25to30-count').innerText = age25to30;
-                document.getElementById('above30-count').innerText = above30;
+        // 計算總參與人數
+        const totalParticipants = level1 + level2 + level3;
 
-                // 計算總參與人數
-                const totalParticipants = under25 + age25to30 + above30;
-                document.getElementById('total-participants').innerText = totalParticipants;
-            });
-        }
+        // 更新頁面顯示
+        document.getElementById('total-participants').innerText = totalParticipants;
+    });
+}
 
-        window.onload = function () {
-            loadAgeSelectionStats(); // 載入年齡選擇數據
-        };
+window.onload = function () {
+    loadTotalParticipants();
+};
+
     </script>
 </head>
 <body>

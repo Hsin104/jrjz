@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>選擇測驗級別</title>
-	<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <style>
         body {
@@ -25,17 +25,45 @@
             cursor: pointer;
         }
 
-            button:hover {
-                background-color: #2980b9;
-            }
+        button:hover {
+            background-color: #2980b9;
+        }
     </style>
+    <script>
+        // Firebase 初始化
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            databaseURL: "https://pccujrjz-f0c56-default-rtdb.firebaseio.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // 記錄測驗級別選擇次數
+        function recordLevelSelection(level) {
+            const statsRef = db.ref(`levelSelectionStats/${level}`);
+            statsRef.transaction((currentValue) => {
+                return (currentValue || 0) + 1;
+            }).then(() => {
+                console.log(`記錄 ${level} 點擊成功！`);
+                // 跳轉到對應的測驗頁面
+                window.location.href = `quiz_level_${level}.html`;
+            }).catch((error) => {
+                console.error(`記錄 ${level} 點擊失敗:`, error);
+            });
+        }
+    </script>
 </head>
 <body>
     <h1>選擇測驗級別</h1>
-	<div>
-		<button onclick="window.location.href='quiz_level_1.html'">萌新 (Level 1)</button><br>
-		<button onclick="window.location.href='quiz_level_2.html'">菜鳥 (Level 2)</button><br>
-		<button onclick="window.location.href='quiz_level_3.html'">老手 (Level 3)</button><br>
-	</div>
+    <div>
+        <button onclick="recordLevelSelection(1)">萌新 (Level 1)</button><br>
+        <button onclick="recordLevelSelection(2)">菜鳥 (Level 2)</button><br>
+        <button onclick="recordLevelSelection(3)">老手 (Level 3)</button><br>
+    </div>
 </body>
 </html>
