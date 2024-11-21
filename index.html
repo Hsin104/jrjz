@@ -39,21 +39,21 @@
             margin-bottom: 30px;
         }
 
-        #button-container button {
-            width: 200px;
-            padding: 10px;
-            font-size: 16px;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+            #button-container button {
+                width: 200px;
+                padding: 10px;
+                font-size: 16px;
+                background-color: #3498db;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
 
-        #button-container button:hover {
-            background-color: #2980b9;
-        }
+                #button-container button:hover {
+                    background-color: #2980b9;
+                }
 
         .stats-container {
             max-width: 600px;
@@ -65,13 +65,13 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .stats-container p {
-            margin: 10px 0;
-        }
+            .stats-container p {
+                margin: 10px 0;
+            }
 
-        .stats-container span {
-            font-weight: bold;
-        }
+            .stats-container span {
+                font-weight: bold;
+            }
 
         @media (max-width: 600px) {
             #button-container button {
@@ -108,25 +108,25 @@
         }
 
         // 載入測驗級別選擇統計數據
-function loadTotalParticipants() {
-    const statsRef = db.ref('levelSelectionStats');
-    statsRef.on('value', (snapshot) => {
-        const stats = snapshot.val() || {};
-        const level1 = stats[1] || 0;
-        const level2 = stats[2] || 0;
-        const level3 = stats[3] || 0;
+        function loadTotalParticipants() {
+            const statsRef = db.ref('levelSelectionStats');
+            statsRef.on('value', (snapshot) => {
+                const stats = snapshot.val() || {};
+                const level1 = stats[1] || 0;
+                const level2 = stats[2] || 0;
+                const level3 = stats[3] || 0;
 
-        // 計算總參與人數
-        const totalParticipants = level1 + level2 + level3;
+                // 計算總參與人數
+                const totalParticipants = level1 + level2 + level3;
 
-        // 更新頁面顯示
-        document.getElementById('total-participants').innerText = totalParticipants;
-    });
-}
+                // 更新頁面顯示
+                document.getElementById('total-participants').innerText = totalParticipants;
+            });
+        }
 
-window.onload = function () {
-    loadTotalParticipants();
-};
+        window.onload = function () {
+            loadTotalParticipants();
+        };
 
     </script>
 </head>
@@ -135,19 +135,19 @@ window.onload = function () {
 
     <h2>選擇年齡</h2>
     <div id="button-container">
-        <button onclick="recordAgeSelection('under25')">25歲以下</button>
-        <button onclick="recordAgeSelection('25to30')">25~30歲</button>
-        <button onclick="recordAgeSelection('above30')">30歲以上</button>
+        <button onclick="recordAgeSelection('under18')">18歲以下</button>
+        <button onclick="recordAgeSelection('18to22')">18~22歲</button>
+        <button onclick="recordAgeSelection('above22')">22歲以上</button>
     </div>
 
     <h2>總參與人數: <span id="total-participants">0</span></h2>
 
     <div class="stats-container" style="display: none;">
-    <h2>年齡選擇統計</h2>
-    <p>25歲以下: <span id="under25-count">0</span></p>
-    <p>25~30歲: <span id="25to30-count">0</span></p>
-    <p>30歲以上: <span id="above30-count">0</span></p>
-</div>
+        <h2>年齡選擇統計</h2>
+        <p>25歲以下: <span id="under18-count">0</span></p>
+        <p>25~30歲: <span id="18to22-count">0</span></p>
+        <p>30歲以上: <span id="above22-count">0</span></p>
+    </div>
 
 </body>
 </html>
