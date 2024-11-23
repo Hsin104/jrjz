@@ -207,8 +207,8 @@
                 "options": ["A. 研究過去市場數據和趨勢", "B. 只依賴基本面", "C. 僅針對短期投資", "D. 無需考慮"],
                 "correct": 0,
                 "explanation": "技術分析就是通過研究過去的市場數據、走勢圖來預測未來的走向！它不像基本面分析那樣聚焦企業的內部數據，而是根據歷史的價格波動和成交量，來捕捉未來的投資機會。"
-            },
-            {//21
+            }, 
+			{//21
                 "question": "如何降低駭客入侵的分險?",
                 "options": ["A. 設置8位純數字密碼", "B. 設置8位以上含英文的數字密碼(不分大小寫)", "C. 設置8位以上含英文、符號的數字密碼(不分大小寫)", "D. 設置8位以上含英文、符號的數字密碼(含大小寫英文)"],
                 "correct": 3,
@@ -252,7 +252,7 @@
             },
             {//28
                 "question": "如果懷疑自己遇到詐騙，應該怎麼做？",
-                "options": ["A. 僅告訴朋友", "B. 隨便處理", "C. 保留所有證據並報告", "D. 無需考慮"],
+                "options": ["A. 僅告訴朋友", "B. 隨便處理", "C. 保留所有證據並報案", "D. 無需考慮"],
                 "correct": 2,
                 "explanation": "如果懷疑自己遇到詐騙，記得別輕易放手！保留所有證據並報告給相關機構，這樣能幫助他們展開調查，讓詐騙者無處遁形，保護自己和他人的安全。"
             },
@@ -270,7 +270,7 @@
             }
         ];
         // 隨機選擇15題
-        function getRandomQuestions(questionArray, count) {
+	function getRandomQuestions(questionArray, count) {
             const shuffled = questionArray.sort(() => 0.5 - Math.random());
             return shuffled.slice(0, count);
         }
@@ -291,11 +291,11 @@
             const questionData = selectedQuestions[currentQuestion];
             const container = document.getElementById("question-container");
             container.innerHTML = `
-                    <p>${currentQuestion + 1}. ${questionData.question}</p>
-                    ${questionData.options.map((option, index) => `
-                        <button onclick="handleSelection(${index})" id="option-${index}">${option}</button>
-                    `).join('')}
-                `;
+                <p>${currentQuestion + 1}. ${questionData.question}</p>
+                ${questionData.options.map((option, index) => `
+                    <button onclick="handleSelection(${index})" id="option-${index}">${option}</button>
+                `).join('')}
+            `;
         }
 
         function handleSelection(index) {
@@ -319,17 +319,17 @@
 
             const container = document.getElementById("question-container");
             container.innerHTML += `
-                    <div id="feedback-container">
-                        <p>${isCorrect ? "正確！" : "錯誤！"} <br> ${explanation}</p>
-                        <label>此解析的有用程度（1-3分）：</label>
-                        <select id="feedback-score">
-                            <option value="1">1 - 不太有用</option>
-                            <option value="2">2 - 普通</option>
-                            <option value="3" selected>3 - 很有用</option>
-                        </select>
-                        <button onclick="submitSingleFeedback()">下一題</button>
-                    </div>
-                `;
+                <div id="feedback-container">
+                    <p>${isCorrect ? "正確！" : "錯誤！"} <br> ${explanation}</p>
+                    <label>此解析的有用程度（1-3分）：</label>
+                    <select id="feedback-score">
+                        <option value="1">1 - 不太有用</option>
+                        <option value="2">2 - 普通</option>
+                        <option value="3" selected>3 - 很有用</option>
+                    </select>
+                    <button onclick="submitSingleFeedback()">下一題</button>
+                </div>
+            `;
         }
 
         function submitSingleFeedback() {
@@ -343,57 +343,12 @@
         }
 
         function showResults() {
-            const correctRate = Math.round((score / selectedQuestions.length) * 100); // 計算正確率
-
-            // 為每個範圍設計多組訊息
-            const messages = {
-                100: [
-                    "這表現根本是教科書級！你就是投資界的巴菲特！",
-                    "滿分！別告訴我你已經開了自己的投資學院了吧？",
-                    "神操作！證明了專業就是你的代名詞！",
-                    "滿分達成！還有什麼能難倒你？"
-                ],
-                excellent: [
-                    "很厲害！稍微再精進，老手認證就是你的了！",
-                    "接近滿分！你的穩健操作令人刮目相看！",
-                    "有點意思！差點就滿分了，再加油，你是最強的！",
-                    "這波操作不錯，就差一點點，你可以的！"
-                ],
-                good: [
-                    "不錯不錯，但你應該還能更上一層樓！",
-                    "基礎紮實，但記得，細節決定成敗！",
-                    "很有潛力，再磨練一下，你就是大師！",
-                    "看得出努力了，加把勁，成為投資老手！"
-                ],
-                poor: [
-                    "這結果有點出乎意料，老手也需要複習基本功哦！",
-                    "穩住心態，別讓市場牽著走！",
-                    "可能哪裡疏忽了？建議回頭看些案例分析！",
-                    "這結果讓人有點意外，該不會是在測試時開小差了吧？"
-                ]
-            };
-
-            let selectedMessage = "";
-
-            // 根據正確率範圍隨機挑選訊息
-            if (correctRate === 100) {
-                selectedMessage = messages[100][Math.floor(Math.random() * messages[100].length)];
-            } else if (correctRate >= 80) {
-                selectedMessage = messages.excellent[Math.floor(Math.random() * messages.excellent.length)];
-            } else if (correctRate >= 50) {
-                selectedMessage = messages.good[Math.floor(Math.random() * messages.good.length)];
-            } else {
-                selectedMessage = messages.poor[Math.floor(Math.random() * messages.poor.length)];
-            }
-
-            // 更新結果顯示
             const container = document.getElementById("question-container");
             container.innerHTML = `
-                        <p>測驗完成！</p>
-                        <p>正確率：${correctRate}%</p>
-                        <p>${selectedMessage}</p>
-                        <button onclick="submitFeedback()">提交回饋</button>
-                    `;
+                <p>測驗完成！</p>
+                <p>正確率：${Math.round((score / selectedQuestions.length) * 100)}%</p>
+                <button onclick="submitFeedback()">提交回饋</button>
+            `;
         }
 
         function submitFeedback() {
@@ -418,13 +373,13 @@
 
                 levelRef.set(stats).then(() => {
                     document.getElementById("question-container").innerHTML = `
-                            <p>感謝參與！回饋已提交。</p>
-                        `;
+                        <p>感謝參與！回饋已提交。</p>
+                    `;
                 }).catch(error => {
                     alert("提交失敗，請重試！");
                 });
-                alert("感謝您的參與！測驗結果已提交。");
-                window.location.href = "index.html"; // 跳轉到主頁
+				alert("感謝您的參與！測驗結果已提交。");
+				window.location.href = "index.html"; // 跳轉到主頁
             });
         }
 
